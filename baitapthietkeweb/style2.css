@@ -1,0 +1,278 @@
+.class{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 999;
+}
+.class1 {
+    display: flex;
+    align-items: center;     
+    justify-content: center;  
+    gap: 10px;
+    color: yellow;
+    background: linear-gradient(
+        90deg,
+        #8b0d1a,
+        #b53c48,
+        #c94858,
+        #aa3841,
+        #8b0d1a
+    );
+
+    background-size: 300% 100%;
+    animation: shineMove 3s linear infinite;
+}
+@keyframes shineMove {
+    0% {
+        background-position: 0% 0;
+    }
+    100% {
+        background-position: 300% 0;
+    }
+}
+.class1a{
+    color: white;
+}
+.class2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+.class2a input{
+    border-radius: 10px;
+    width: 400px;
+    height: 30px;
+}
+.class2 h1{
+    text-shadow: 2px 1px rgb(143, 18, 18);
+}
+.class3a{
+    display: flex;
+    list-style-type: none;
+    gap:20px;
+}
+.class3a a{
+    color: black;
+}
+.class4{
+    margin-left: 300px;
+}
+.class4, .class5, .class6, .class7,.class8,.class9 {
+    position: relative;
+    display: inline-block;
+}
+.class4a {
+    background: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+.class4a:hover{
+    color: rgb(115, 5, 5);
+}
+.class4b {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 150px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+    padding: 0;
+    z-index: 999;
+}
+
+.class4b a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ccc;
+}
+
+.class4b a:hover {
+    background: #f0f0f0;
+    color: rgb(114, 4, 4);
+}
+
+.class4:hover .class4b,.class5:hover .class4b,.class6:hover .class4b,.class7:hover .class4b,.class8:hover .class4b {
+    display: block;
+}
+.class10{
+    font-size: 30px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    bottom: 100px;
+    right: 20px;
+}
+.class10 a{
+    color: black;
+}
+#trangchu{
+    color: black;
+    text-decoration: none;
+    margin-left: 170px;
+}
+#trangchu:hover{
+    color: red;
+}
+.class11a{
+    display: flex;
+    gap: 20px;
+    width: 500px;
+    margin-left:170px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.class11a1 img{
+    width: 100px;
+    height: 147px;
+}
+.class11a2 img{
+    width: 400px;
+    height: 600px;
+}
+.class11{
+    display: flex;
+}
+.class11b{
+    margin-left: 50px;
+}
+.class11b h2{
+    text-shadow: 2px 1px rgb(143, 18, 18);
+}
+.class11b h4{
+    font-size: 20px;
+}
+#tien{
+    font-size: 25px;
+    color: red;
+}
+#WHITE{
+    font-weight: bold;
+}
+.class11b1{
+    margin-bottom: 10px;
+}
+.class11b1 button{
+    padding: 8px 12px;
+    border: 1px solid black;
+    background: white;
+    cursor: pointer;
+}
+.class11b2{
+    display: flex;
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 35px;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.class11b2 button{
+    width: 33%;
+    height: 100%;
+    opacity: 0.7;
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 18px;
+}
+.class11b2a{
+    color: black;
+}
+.class11b2c{
+    color: red;
+}
+.class11b2 span{
+    width: 33%;
+    text-align: center;
+    font-size: 18px;
+}
+.class11b3{
+    display: flex;
+    gap:10px;
+    margin-top: 20px;
+}
+.class11b3 button{
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+.class11b3a{
+    background: red;
+    color: white;
+}
+.class11b3b {
+    background: black;
+    color: white;
+} 
+.class11b1 button.size-active {
+    background: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 1px solid red;
+}
+.class12{
+    margin-left: 170px;
+    margin-top: 50px;
+    margin-right: 200px;
+    margin-bottom: 50px;
+}
+.class12b img{
+    width: 500px;
+    height: 800px;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.class12b h3{
+    text-align: center;
+}
+.class21 {
+    display: flex;         
+    gap: 10px;
+    margin-left: 800px;   
+    margin-bottom: 40px;
+}
+
+.class21 > div {
+    display: flex;          
+    align-items: center;   
+    gap: 10px;     
+}
+
+.class21 a {
+    text-decoration: none;
+    color: inherit;
+} 
+.class22a{
+    margin-left: 200px;
+}
+.class22a img{
+    width: 30px;
+    height: 30px;
+}
+.class22{
+    display: flex;
+    gap: 250px;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+.class23{
+    font-size: 20px;
+    background-color: rgb(77, 5, 5);
+    padding: 1px 0;
+    text-align: center;
+    color: white;
+}
+

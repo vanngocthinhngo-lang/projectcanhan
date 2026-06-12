@@ -1,0 +1,267 @@
+body{
+    margin-top: 250px;
+}
+.class{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+}
+.class1 {
+    display: flex;
+    align-items: center;     
+    justify-content: center;  
+    gap: 10px;
+    color: yellow;
+    background: linear-gradient(
+        90deg,
+        #8b0d1a,
+        #b53c48,
+        #c94858,
+        #aa3841,
+        #8b0d1a
+    );
+
+    background-size: 300% 100%;
+    animation: shineMove 3s linear infinite;
+}
+@keyframes shineMove {
+    0% {
+        background-position: 0% 0;
+    }
+    100% {
+        background-position: 300% 0;
+    }
+}
+.class1a{
+    color: white;
+}
+.class2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+.class2a input{
+    border-radius: 10px;
+    width: 400px;
+    height: 30px;
+}
+.class2 h1{
+    text-shadow: 2px 1px rgb(143, 18, 18);
+}
+.class3a{
+    display: flex;
+    list-style-type: none;
+    gap:20px;
+}
+.class3a a{
+    color: black;
+}
+.class4{
+    margin-left: 300px;
+}
+.class4, .class5, .class6, .class7,.class8,.class9 {
+    position: relative;
+    display: inline-block;
+}
+.class4a {
+    background: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+.class4a:hover{
+    color: rgb(115, 5, 5);
+}
+.class4b {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 150px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+    padding: 0;
+    z-index: 999;
+}
+
+.class4b a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ccc;
+}
+
+.class4b a:hover {
+    background: #f0f0f0;
+    color: rgb(114, 4, 4);
+}
+
+.class4:hover .class4b,.class5:hover .class4b,.class6:hover .class4b,.class7:hover .class4b,.class8:hover .class4b {
+    display: block;
+}
+#pageTransition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255);    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease; 
+}
+
+#pageTransition.active {
+    opacity: 1;
+}
+
+.class10{
+    font-size: 30px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    bottom: 100px;
+    right: 20px;
+}
+.class10 a{
+    color: black;
+}
+.class11a {
+    width: 1200px;
+    height: 500px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.class11b{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto;
+}
+.class11b img{
+    width: 390px;
+}
+.class11b1 {
+    text-align: center;
+    font-size: 20px;
+}
+.class11b1 a{
+    color: red;
+    font-size: 18px;
+    text-decoration: none;
+}
+.class12 h1{
+    text-align: center;
+}
+.class12 img {
+    width: 1200px;
+    height: 500px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.class13,.class14,.class15,.class16{
+    width: 280px;
+    margin-left: 10px;
+} 
+.class13141516{
+    display: flex;
+    justify-content: center;
+}
+.class13:hover,.class14:hover,.class15:hover,.class16:hover{
+    box-shadow: 0 10px 10px rgba(211, 16, 16, 0.15);
+}
+.class13a img{
+    width: 100%;
+    height: auto;
+}
+.class13b{
+    font-size: 15px;
+    margin: 8px 0;
+}
+.class13c{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.class13c2 li{
+    list-style: none;
+    display: inline-block;
+}
+.class17 h1{
+    text-align: center;
+}
+.class17 img{
+    width: 1200px;
+    height: 500px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.class18{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.class19{
+    display: flex;
+    justify-content: center;
+    gap:50px;
+    margin-bottom: 50px;
+}
+.class19 img{
+    width: 350px;
+    height: 450px;
+}
+.class20{
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.class21 {
+    display: flex;         
+    gap: 10px;
+    margin-left: 800px;   
+    margin-bottom: 40px;
+}
+
+.class21 > div {
+    display: flex;          
+    align-items: center;   
+    gap: 10px;     
+}
+
+.class21 a {
+    text-decoration: none;
+    color: inherit;
+} 
+.class22a{
+    margin-left: 200px;
+}
+.class22a img{
+    width: 30px;
+    height: 30px;
+}
+.class22{
+    display: flex;
+    gap: 250px;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+.class23{
+    font-size: 20px;
+    background-color: rgb(77, 5, 5);
+    padding: 1px 0;
+    text-align: center;
+    color: white;
+}

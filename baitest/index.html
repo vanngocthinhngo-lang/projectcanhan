@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>✈ GALAXY STRIKER - Ban May Bay</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:radial-gradient(ellipse at center,#0a0015 0%,#000005 100%);
+  display:flex;justify-content:center;align-items:center;
+  min-height:100vh;overflow:hidden;
+  font-family:'Orbitron',sans-serif;
+}
+#wrap{position:relative;width:520px;}
+canvas{
+  display:block;
+  border:1px solid #7700ff;
+  box-shadow:0 0 0 1px #3300aa,
+             0 0 30px #7700ff,
+             0 0 80px rgba(100,0,255,0.25),
+             0 0 4px #ff00cc inset;
+}
+/* Corner decorations */
+.c{position:absolute;width:28px;height:28px;border-color:#ff00cc;border-style:solid;z-index:5;}
+.c.tl{top:-5px;left:-5px;border-width:3px 0 0 3px;box-shadow:-4px -4px 10px #ff00cc;}
+.c.tr{top:-5px;right:-5px;border-width:3px 3px 0 0;box-shadow:4px -4px 10px #ff00cc;}
+.c.bl{bottom:-5px;left:-5px;border-width:0 0 3px 3px;box-shadow:-4px 4px 10px #ff00cc;}
+.c.br{bottom:-5px;right:-5px;border-width:0 3px 3px 0;box-shadow:4px 4px 10px #ff00cc;}
+/* CRT scanline overlay */
+#wrap::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:4;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div class="c tl"></div><div class="c tr"></div>
+  <div class="c bl"></div><div class="c br"></div>
+  <canvas id="cv" width="520" height="720"></canvas>
+</div>
+<script>
+// ================================================================
+//  GALAXY STRIKER - Game Ban May Bay
+//  TP2: Bresenham Line (8 huong), Midpoint Circle, Scanline Fill
+//  TP3: Fractal Koch Curve + Fractal Tree (vat can)
+//  TP4: Tinh tien, Quay (matrix), Co gian (scale)
+// ================================================================
+
+const cv = document.getElementById('cv');
+const cx = cv.getContext('2d');
+const W = cv.width, H = cv.height;
+
+// ================================================================
+// TP2-A: BRESENHAM LINE
+// Mo ta: Ve doan thang pixel chinh xac, xu ly day du 8 huong.
+// Thuat toan: dung sai du lieu (err) quyet dinh buoc tiep theo.
+// Ap dung: ve vien nhan vat, dan player, khung UI, duong trang tri.
+// ================================================================
+function bLine(x1,y1,x2,y2,col,w=1){
+  x1=x1|0; y1=y1|0; x2=x2|0; y2=y2|0;
+  let dx=Math.abs(x2-x1), sx=x1<x2?1:-1;   // buoc X
+  let dy=-Math.abs(y2-y1), sy=y1<y2?1:-1;  // buoc Y (am de tinh err)
+  let err=dx+dy;
+  cx.fillStyle=col;
+  while(true){
+    cx.fillRect(x1,y1,w,w);                 // dat pixel tai (x1,y1)
+    if(x1===x2&&y1===y2) break;
+    let e2=2*err;
+    if(e2>=dy){err+=dy; x1+=sx;}            // sai so du -> buoc theo X
+    if(e2<=dx){err+=dx; y1+=sy;}            // sai so du -> buoc theo Y
+  }
+}
+
+// ================================================================
+// TP2-B: MIDPOINT CIRCLE
+// Mo ta: Ve duong tron bang phan tich 8 diem doi xung.
+// Thuat toan: diem kiem soat d quyet dinh y tang hay giam.
+// Ap dung: buong lai may bay, dan dich, hieu ung no, trai tim HUD.
+// ================================================================
+function mCircle(xc,yc,r,col,fill=false){
+  xc=xc|0; yc=yc|0; r=r|0;
+  if(r<=0) return;
+  cx.fillStyle=col;
+  let x=0, y=r, d=1-r;
+  while(x<=y){
+    if(fill){
+      // To dac: ve cac duong ngang giua cap doi xung
+      for(let [xx,yy] of [[xc-y,yc+x,2*y],[xc-y,yc-x,2*y],[xc-x,yc+y,2*x],[xc-x,yc-y,2*x]])
+        cx.fillRect(xx,yy,2*(xx===xc-y?y:x)+1,1);
+    } else {
+      // Chi vien: 8 diem doi xung
+      for(let [px,py] of [
+        [xc+x,yc+y],[xc-x,yc+y],[xc+x,yc-y],[xc-x,yc-y],
+        [xc+y,yc+x],[xc-y,yc+x],[xc+y,yc-x],[xc-y,yc-x]
+      ]) cx.fillRect(px,py,1,1);
+    }
+    if(d<0) d+=2*x+3;
+    else {d+=2*(x-y)+5; y--;}
+    x++;
+  }
+}
+
+// ================================================================
+// TP2-C: SCANLINE FILL (To mau da giac tuy y)
+// Mo ta: Duong quet ngang tim giao diem voi canh da giac, to khoang giua.
+// Thuat toan: sap xep hoanh do giao diem, to tung cap.
+// Ap dung: to TOAN BO than may bay, canh, lua, nut menu, khung HUD.
+// ================================================================
+function sFill(pts,col){
+  let ys=pts.map(p=>p[1]);
+  let ymin=Math.min(...ys)|0, ymax=Math.max(...ys)|0;
+  cx.fillStyle=col;
+  for(let y=ymin;y<=ymax;y++){
+    let xs=[];
+    for(let i=0;i<pts.length;i++){
+      let [x1,y1]=pts[i], [x2,y2]=pts[(i+1)%pts.length];
+      // Giao diem duong quet voi canh i
+      if((y1<=y&&y<y2)||(y2<=y&&y<y1))
+        xs.push(x1+(y-y1)*(x2-x1)/(y2-y1));
+    }
+    xs.sort((a,b)=>a-b);
+    // To cac doan nam trong da giac
+    for(let i=0;i+1<xs.length;i+=2)
+      cx.fillRect(xs[i]|0,y,(xs[i+1]-xs[i]+1)|0,1);
+  }
+}
+
+// Ve duong vien da giac bang Bresenham
+function sLine(pts,col,w=1){
+  for(let i=0;i<pts.length;i++){
+    let j=(i+1)%pts.length;
+    bLine(pts[i][0],pts[i][1],pts[j][0],pts[j][1],col,w);
+  }
+}
+
+// ================================================================
+// TP3-A: FRACTAL TREE (Cay nhi phan de quy - VAT CAN)
+// Mo ta: De quy nhi phan, moi canh chia thanh 2 nhanh goc ±angle.
+// Ghi chu: depth=5, goc +/-30 do, do dai = depth*5 px.
+// Ap dung: vat can roi xuong, co tuong tac va cham voi player.
+// ================================================================
+function fracTree(x,y,angDeg,depth,col1,col2){
+  if(depth===0) return;
+  let rad=angDeg*Math.PI/180;
+  let len=depth*5;
+  let x2=(x+Math.cos(rad)*len)|0;
+  let y2=(y-Math.sin(rad)*len)|0;
+  // Mau thay doi theo do sau: xanh la->vang
+  let t=(5-depth)/4;
+  let r=(parseInt(col1.slice(1,3),16)*(1-t)+parseInt(col2.slice(1,3),16)*t)|0;
+  let g=(parseInt(col1.slice(3,5),16)*(1-t)+parseInt(col2.slice(3,5),16)*t)|0;
+  let b=(parseInt(col1.slice(5,7),16)*(1-t)+parseInt(col2.slice(5,7),16)*t)|0;
+  let c=`rgb(${r},${g},${b})`;
+  bLine(x,y,x2,y2,c,depth>3?2:1);       // Bresenham de ve than cay (TP2)
+  fracTree(x2,y2,angDeg-30,depth-1,col1,col2); // nhanh trai
+  fracTree(x2,y2,angDeg+30,depth-1,col1,col2); // nhanh phai
+}
+
+// ================================================================
+// TP3-B: FRACTAL KOCH CURVE (Duong cong Koch chinh thong - NEN)
+// Mo ta: Chia doan 1/3, tao dinh tam giac deu, de quy 4 cap.
+// Ghi chu: depth=3 hieu qua/nhanh, tao day nui nen bau troi.
+// Ap dung: dia hinh nen phia tren man hinh, tao boi canh vu tru.
+// ================================================================
+function kochCurve(x1,y1,x2,y2,dep,col){
+  if(dep===0){ bLine(x1|0,y1|0,x2|0,y2|0,col); return; }
+  // 3 diem chia: 1/3 va 2/3 doan
+  let p1x=x1+(x2-x1)/3,   p1y=y1+(y2-y1)/3;
+  let p2x=x1+2*(x2-x1)/3, p2y=y1+2*(y2-y1)/3;
+  // Dinh tam giac deu (xoay 60 do) - phep quay TP4
+  let mx=(p1x+p2x)/2-Math.sin(Math.PI/3)*(p2y-p1y);
+  let my=(p1y+p2y)/2+Math.sin(Math.PI/3)*(p2x-p1x);
+  kochCurve(x1,y1,p1x,p1y,dep-1,col);   // doan 1
+  kochCurve(p1x,p1y,mx,my,dep-1,col);   // doan 2 (len dinh)
+  kochCurve(mx,my,p2x,p2y,dep-1,col);   // doan 3 (xuong)
+  kochCurve(p2x,p2y,x2,y2,dep-1,col);   // doan 4
+}
+
+// ================================================================
+// TP4: PHEP BIEN DOI 2 CHIEU
+// ================================================================
+
+// A: Tinh tien - dich chuyen diem (tx,ty)
+// Ap dung: di chuyen player, enemy, tat ca dan bay, vat can
+function tp4T(x,y,tx,ty){ return [x+tx, y+ty]; }
+
+// B: Quay quanh tam (cx,cy) goc theta (radian)
+// Ma tran quay: [cos -sin; sin cos]
+// Ap dung: tinh huong dan dich bay ve phia player, quay canh may bay
+function tp4R(x,y,ocx,ocy,theta){
+  let tx=x-ocx, ty=y-ocy;
+  return [ocx+tx*Math.cos(theta)-ty*Math.sin(theta),
+          ocy+tx*Math.sin(theta)+ty*Math.cos(theta)];
+}
+
+// C: Co gian quanh tam (cx,cy) he so (sx,sy)
+// Ap dung: hieu ung spawn enemy (scale 0->1), title nhip theo sin
+function tp4S(x,y,ocx,ocy,sx,sy){
+  return [ocx+(x-ocx)*sx, ocy+(y-ocy)*sy];
+}
+
+// Co gian toan bo mang diem quanh tam
+function scalePoly(pts,cx2,cy2,s){
+  return pts.map(([x,y])=>tp4S(x,y,cx2,cy2,s,s));
+}
+
+// Quay toan bo mang diem quanh tam
+function rotatePoly(pts,cx2,cy2,theta){
+  return pts.map(([x,y])=>tp4R(x,y,cx2,cy2,theta));
+}
+
+// ================================================================
+// VE NHAN VAT
+// ================================================================
+
+// --- TRAI TIM (HUD mang song) ---
+// Dung: scanlineFill + midpointCircle (TP2)
+function drawHeart(x,y,sz=9){
+  let r=sz|0;
+  mCircle(x,   y, r,'#ff2255',true);
+  mCircle(x+r*2,y, r,'#ff2255',true);
+  sFill([[x-r,y+2],[x+r*3,y+2],[x+r,y+sz*2.2|0]],'#ff2255');
+  mCircle(x,   y, r,'#ff88aa');
+  mCircle(x+r*2,y, r,'#ff88aa');
+}
+
+// --- MAY BAY PLAYER ---
+// Toan bo dung scanlineFill, Bresenham, Midpoint - KHONG dung API ve san
+function drawPlayer(px,py,sc=1){
+  let P=(pts)=>scalePoly(pts,px,py,sc);
+  // --- Lua phun (3 lop mau) ---
+  sFill(P([[px-5,py+65],[px+5,py+65],[px,py+88]]),'#ff8800');
+  sFill(P([[px-3,py+66],[px+3,py+66],[px,py+78]]),'#ffdd00');
+  sFill(P([[px-1,py+67],[px+1,py+67],[px,py+72]]),'#ffffff');
+  // --- Canh trai ---
+  let wL=P([[px-10,py+24],[px-44,py+46],[px-36,py+60],[px-8,py+44]]);
+  sFill(wL,'#0044cc');
+  sLine(wL,'#4499ff',1);
+  // Chi tiet canh trai
+  bLine(wL[0][0]|0,wL[0][1]|0,wL[1][0]|0,wL[1][1]|0,'#88bbff');
+  // --- Canh phai ---
+  let wR=P([[px+10,py+24],[px+44,py+46],[px+36,py+60],[px+8,py+44]]);
+  sFill(wR,'#0044cc');
+  sLine(wR,'#4499ff',1);
+  bLine(wR[0][0]|0,wR[0][1]|0,wR[1][0]|0,wR[1][1]|0,'#88bbff');
+  // --- Canh nho phia sau trai ---
+  let wSL=P([[px-8,py+50],[px-22,py+62],[px-18,py+68],[px-6,py+58]]);
+  sFill(wSL,'#002299');sLine(wSL,'#3366cc');
+  // --- Canh nho phia sau phai ---
+  let wSR=P([[px+8,py+50],[px+22,py+62],[px+18,py+68],[px+6,py+58]]);
+  sFill(wSR,'#002299');sLine(wSR,'#3366cc');
+  // --- Than may bay chinh ---
+  let body=P([[px,py+2],[px+11,py+20],[px+10,py+62],[px-10,py+62],[px-11,py+20]]);
+  sFill(body,'#00bbee');
+  sLine(body,'#aaeeff',1);
+  // Duong noi giua than
+  bLine(px|0,(py+20)|0,px|0,(py+62)|0,'#ffffff');
+  // --- Dau may bay (hinh tam giac nho) ---
+  let nose=P([[px,py],[px+8,py+12],[px-8,py+12]]);
+  sFill(nose,'#00eeff');sLine(nose,'#ffffff');
+  // --- Dong co trai ---
+  let eL=P([[px-14,py+38],[px-22,py+38],[px-22,py+56],[px-14,py+56]]);
+  sFill(eL,'#004499');sLine(eL,'#0066ff');
+  mCircle((px-18)*sc+px*(1-sc)|0,(py+56)*sc+py*(1-sc)|0,3*sc|0,'#ff6600',true);
+  // --- Dong co phai ---
+  let eR=P([[px+14,py+38],[px+22,py+38],[px+22,py+56],[px+14,py+56]]);
+  sFill(eR,'#004499');sLine(eR,'#0066ff');
+  mCircle((px+18)*sc+px*(1-sc)|0,(py+56)*sc+py*(1-sc)|0,3*sc|0,'#ff6600',true);
+  // --- Buong lai ---
+  mCircle(px|0,(py+16)|0,9*sc|0,'#001133',true);
+  mCircle(px|0,(py+16)|0,9*sc|0,'#00ccff',false);
+  mCircle(px|0,(py+16)|0,6*sc|0,'#0044aa',true);
+  mCircle(px|0,(py+16)|0,4*sc|0,'#00ffff',true);
+  mCircle(px|0,(py+16)|0,2*sc|0,'#ffffff',true);
+}
+
+// --- MAY BAY DICH ---
+// Co hieu ung scale khi spawn (TP4 co gian)
+function drawEnemy(ex,ey,sc=1,type='red'){
+  if(sc<0.05) return;
+  let P=(pts)=>scalePoly(pts,ex,ey,sc);
+  let mainCol  = type==='red'  ? '#cc2200' : type==='purple' ? '#7700cc' : '#006622';
+  let accentCol= type==='red'  ? '#ff6644' : type==='purple' ? '#cc44ff' : '#00ff44';
+  let wingCol  = type==='red'  ? '#880000' : type==='purple' ? '#440088' : '#004400';
+  // Lua phia tren
+  let fireT=P([[ex-4,ey-6],[ex+4,ey-6],[ex,ey-18]]);
+  sFill(fireT,'#ffaa00');
+  sFill(P([[ex-2,ey-6],[ex+2,ey-6],[ex,ey-12]]),'#ffffff');
+  // Canh chinh
+  let wing=P([[ex-40,ey+12],[ex-10,ey+28],[ex+10,ey+28],[ex+40,ey+12],[ex+16,ey+4],[ex-16,ey+4]]);
+  sFill(wing,wingCol);sLine(wing,accentCol);
+  // Chi tiet canh
+  bLine(P([[ex-40,ey+12]])[0][0]|0,P([[ex-40,ey+12]])[0][1]|0,
+        P([[ex-16,ey+4]])[0][0]|0,P([[ex-16,ey+4]])[0][1]|0,accentCol);
+  bLine(P([[ex+40,ey+12]])[0][0]|0,P([[ex+40,ey+12]])[0][1]|0,
+        P([[ex+16,ey+4]])[0][0]|0,P([[ex+16,ey+4]])[0][1]|0,accentCol);
+  // Than
+  let h=(55*sc)|0; if(h<8)h=8;
+  let body=P([[ex,ey+h],[ex+13,ey+22],[ex,ey],[ex-13,ey+22]]);
+  sFill(body,mainCol);sLine(body,accentCol);
+  // Vach doc than
+  bLine(P([[ex,ey]])[0][0]|0,P([[ex,ey]])[0][1]|0,
+        P([[ex,ey+h]])[0][0]|0,P([[ex,ey+h]])[0][1]|0,'#ffffff');
+  // Canh nho
+  let wsL=P([[ex-10,ey+30],[ex-22,ey+44],[ex-16,ey+52],[ex-8,ey+38]]);
+  sFill(wsL,wingCol);sLine(wsL,accentCol);
+  let wsR=P([[ex+10,ey+30],[ex+22,ey+44],[ex+16,ey+52],[ex+8,ey+38]]);
+  sFill(wsR,wingCol);sLine(wsR,accentCol);
+  // Cockpit
+  mCircle(ex|0,(ey+12*sc)|0,(7*sc)|0,'#220000',true);
+  mCircle(ex|0,(ey+12*sc)|0,(7*sc)|0,accentCol,false);
+  mCircle(ex|0,(ey+12*sc)|0,(4*sc)|0,'#ffff00',true);
+  mCircle(ex|0,(ey+12*sc)|0,(2*sc)|0,'#ffffff',true);
+}
+
+// ================================================================
+// NHAC & AM THANH (Web Audio API)
+// ================================================================
+let audioCtx=null;
+function initAudio(){
+  try{ audioCtx=new(window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+}
+function playTone(freq,dur,type='square',vol=0.15){
+  if(!audioCtx) return;
+  let o=audioCtx.createOscillator();
+  let g=audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  o.type=type; o.frequency.value=freq;
+  g.gain.setValueAtTime(vol,audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+  o.start(); o.stop(audioCtx.currentTime+dur);
+}
+// Tieng ban
+function sfxShoot(){ playTone(880,0.08,'square',0.1); }
+// Tieng no
+function sfxBoom(big=false){
+  if(!audioCtx) return;
+  let buf=audioCtx.createBuffer(1,audioCtx.sampleRate*(big?0.5:0.25),audioCtx.sampleRate);
+  let d=buf.getChannelData(0);
+  for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
+  let s=audioCtx.createBufferSource();
+  s.buffer=buf;
+  let g=audioCtx.createGain(); g.gain.value=big?0.4:0.25;
+  s.connect(g); g.connect(audioCtx.destination); s.start();
+}
+// Tieng mat mang
+function sfxHurt(){ playTone(220,0.3,'sawtooth',0.2); }
+// Nhac nen (vong lap)
+let bgmNode=null;
+function startBGM(){
+  if(!audioCtx||bgmNode) return;
+  let notes=[330,370,440,330,370,494,440,370];
+  let idx=0;
+  function playNext(){
+    if(!audioCtx) return;
+    playTone(notes[idx%notes.length],0.18,'triangle',0.07);
+    idx++;
+    bgmNode=setTimeout(playNext,220);
+  }
+  playNext();
+}
+function stopBGM(){ if(bgmNode){clearTimeout(bgmNode);bgmNode=null;} }
+
+// ================================================================
+// SAO NEN
+// ================================================================
+let stars=[];
+function initStars(){
+  stars=[];
+  for(let i=0;i<100;i++)
+    stars.push({x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()<0.15?2:1,
+      spd:Math.random()*0.4+0.15,
+      col:Math.random()<0.3?'#aaaaff':'#ffffff'});
+}
+function drawStars(){
+  for(let s of stars){
+    s.y+=s.spd*(gameSpeed||1);
+    if(s.y>H){s.y=0;s.x=Math.random()*W;}
+    mCircle(s.x|0,s.y|0,s.r,s.col,true);
+  }
+}
+
+// ================================================================
+// TIEN ICH
+// ================================================================
+function rnd(a,b){return (Math.random()*(b-a)+a)|0;}
+function dist2(x1,y1,x2,y2){return Math.hypot(x2-x1,y2-y1);}
+
+// ================================================================
+// TRANG THAI GAME
+// ================================================================
+let STATE='MENU';
+let highScore=0;
+let frame=0;
+
+// Bien game
+let px2,py2,lives,score,gameSpeed,speedMode;
+let playerBullets=[],enemyBullets=[],enemies=[],particles=[],fracObs=[];
+let cooldown=0,shieldTimer=0;
+
+// Input (phan biet ro phim mui ten va phim chu)
+const keys={};
+document.addEventListener('keydown',e=>{
+  if(!audioCtx) initAudio();
+  startBGM();
+  keys[e.code]=true;
+  onKeyDown(e.code);
+  // Ngan scroll trang
+  if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))
+    e.preventDefault();
+});
+document.addEventListener('keyup',e=>{ keys[e.code]=false; });
+
+// ================================================================
+// XU LY PHIM - AN TOAN (bo qua phim mui ten o man cho)
+// Tuong tac nguoi dung & Da dang toc do (TP4 tieu chi 2)
+// ================================================================
+function onKeyDown(code){
+  if(STATE==='MENU'){
+    // Chi nhan phim so, KHONG nhan mui ten
+    if(code==='Digit1'||code==='Numpad1') startGame();
+    if(code==='Digit2'||code==='Numpad2') STATE='HELP';
+    if(code==='Digit3'||code==='Numpad3') { stopBGM(); return; }
+  }
+  else if(STATE==='HELP'){
+    if(code==='Enter'||code==='Escape') STATE='MENU';
+  }
+  else if(STATE==='GAMEOVER'){
+    // TUYET DOI chi R hoac M - phim khac (ke ca mui ten, space) bi bo qua hoan toan
+    if(code==='KeyR') startGame();
+    else if(code==='KeyM'){ stopBGM(); STATE='MENU'; }
+    // Khong co else nao khac -> moi phim khac deu duoc bo qua
+  }
+  else if(STATE==='PLAYING'){
+    // TP4 Tieu chi 2: 0-Dung, 1-Cham, 2-Nhanh, 3-Nhanh hon
+    if(code==='Digit0'||code==='Numpad0'){speedMode=0; gameSpeed=0;}
+    if(code==='Digit1'||code==='Numpad1'){speedMode=1; gameSpeed=1;}
+    if(code==='Digit2'||code==='Numpad2'){speedMode=2; gameSpeed=2.5;}
+    if(code==='Digit3'||code==='Numpad3'){speedMode=3; gameSpeed=5;}
+  }
+}
+
+// ================================================================
+// KHOI TAO GAME
+// ================================================================
+function startGame(){
+  STATE='PLAYING';
+  px2=W/2; py2=H-140;
+  lives=3; score=0; gameSpeed=1; speedMode=1;
+  playerBullets=[]; enemyBullets=[]; particles=[]; fracObs=[];
+  enemies=[];
+  cooldown=0; shieldTimer=0; frame=0;
+  for(let i=0;i<3;i++) spawnEnemy();
+  // Vat can fractal
+  fracObs.push({x:rnd(70,W-70),y:-180,active:true});
+  startBGM();
+}
+
+function spawnEnemy(){
+  let types=['red','red','red','purple','purple','green'];
+  let t=types[rnd(0,types.length)];
+  enemies.push({
+    x:rnd(55,W-55), y:rnd(-400,-80),
+    type:t,
+    // Ke dich do: ban thang, Tim: tu biet, Xanh: bay ziz-zag
+    mode: t==='red'?'shooter': t==='purple'?'kamikaze':'zigzag',
+    reload:rnd(40,80), hp:t==='purple'?2:1,
+    scaleAnim:0,      // TP4: co gian 0->1 khi spawn
+    vx:(Math.random()-0.5)*1.2,
+    phase:Math.random()*Math.PI*2  // cho zigzag
+  });
+}
+
+// ================================================================
+// UPDATE
+// ================================================================
+function update(){
+  if(STATE!=='PLAYING') return;
+  frame++;
+  if(shieldTimer>0) shieldTimer--;
+
+  // TP4: Di chuyen player (tinh tien)
+  if((keys['ArrowLeft']||keys['KeyA']) && px2>32)     px2-=5;
+  if((keys['ArrowRight']||keys['KeyD']) && px2<W-32)  px2+=5;
+  if((keys['ArrowUp']||keys['KeyW'])   && py2>90)     py2-=5;
+  if((keys['ArrowDown']||keys['KeyS']) && py2<H-90)   py2+=5;
+
+  // Ban dan
+  if((keys['Space']||keys['KeyZ']) && cooldown===0){
+    // 3 luong dan
+    playerBullets.push({x:px2,y:py2-34,vx:0,vy:-16,active:true});
+    playerBullets.push({x:px2-8,y:py2-24,vx:-0.6,vy:-15,active:true});
+    playerBullets.push({x:px2+8,y:py2-24,vx:0.6,vy:-15,active:true});
+    cooldown=9;
+    sfxShoot();
+  }
+  if(cooldown>0) cooldown--;
+
+  // === VAT CAN FRACTAL CAY (TP3 + TP4 tinh tien) ===
+  for(let o of fracObs){
+    if(!o.active) continue;
+    // TP4 tinh tien
+    let [nx,ny]=tp4T(o.x,o.y,0,(gameSpeed+1)*1.2);
+    o.x=nx; o.y=ny;
+    // Va cham
+    if(dist2(px2,py2,o.x,o.y)<55 && shieldTimer===0){
+      lives--; sfxHurt(); shieldTimer=90;
+      o.active=false;
+      explosion(o.x,o.y,'big');
+    }
+    if(o.y>H+30) o.active=false;
+  }
+  fracObs=fracObs.filter(o=>o.active);
+  // Sinh vat can moi ngau nhien
+  if(fracObs.length===0 && Math.random()<0.008)
+    fracObs.push({x:rnd(70,W-70),y:-180,active:true});
+
+  // === ENEMY (TP4: tinh tien, co gian khi spawn, quay huong) ===
+  for(let e of enemies){
+    // Co gian khi spawn (TP4)
+    if(e.scaleAnim<1) e.scaleAnim=Math.min(1,e.scaleAnim+0.04);
+
+    // TP4 tinh tien chinh
+    if(gameSpeed>0){
+      let [nx,ny]=tp4T(e.x,e.y,e.vx*gameSpeed,gameSpeed*0.9);
+      e.x=nx; e.y=ny;
+    }
+    // Doi huong khi cham bien
+    if(e.x<30||e.x>W-30) e.vx*=-1;
+
+    // Kamikaze: TP4 phep quay - tinh goc bay ve player
+    if(e.mode==='kamikaze' && e.y>0 && gameSpeed>0){
+      let ang=Math.atan2(py2-e.y, px2-e.x); // goc tu enemy den player
+      let spd=1.5*gameSpeed;
+      let [nx2,ny2]=tp4T(e.x,e.y, Math.cos(ang)*spd, Math.sin(ang)*spd);
+      e.x=nx2; e.y=ny2;
+    }
+    // Zigzag (xanh la): tinh tien theo sin
+    if(e.mode==='zigzag' && gameSpeed>0){
+      e.phase=(e.phase||0)+0.05;
+      let [nx2,ny2]=tp4T(e.x,e.y, Math.sin(e.phase)*3*gameSpeed, 0);
+      e.x=nx2; e.y=ny2;
+    }
+
+    // Ban dan ve phia player (TP4: quay matrix tinh vector dan)
+    if(e.mode==='shooter' && e.y>0 && e.y<H-60 && gameSpeed>0){
+      e.reload--;
+      if(e.reload<=0){
+        let dx=px2-e.x, dy=py2-e.y;
+        let len=Math.hypot(dx,dy)||1;
+        let spd=3+gameSpeed*2;
+        enemyBullets.push({x:e.x,y:e.y+30,vx:dx/len*spd,vy:dy/len*spd,active:true});
+        e.reload=rnd(45,80);
+      }
+    }
+
+    // Va cham player
+    if(dist2(px2,py2,e.x,e.y)<40 && shieldTimer===0){
+      shieldTimer=90; lives--;
+      sfxHurt();
+      explosion(e.x,e.y,'big');
+      e.hp=0;
+    }
+    if(e.y>H+30){ lives--; sfxHurt(); e.hp=0; }
+  }
+  enemies=enemies.filter(e=>e.hp>0);
+  // Spawn them de du so luong
+  let need=3+Math.floor(score/120);
+  while(enemies.length<need) spawnEnemy();
+
+  // === DAN PLAYER ===
+  for(let b of playerBullets){
+    let [nx,ny]=tp4T(b.x,b.y,b.vx,b.vy); // TP4 tinh tien
+    b.x=nx; b.y=ny;
+    for(let e of enemies){
+      if(e.hp>0 && dist2(b.x,b.y,e.x,e.y)<32){
+        b.active=false; e.hp--;
+        if(e.hp<=0){ score+=10; sfxBoom(); explosion(e.x,e.y,'normal'); }
+        else{ explosion(e.x,e.y,'small'); } // Purple mat 2 hit
+      }
+    }
+    if(b.y<0||b.x<0||b.x>W) b.active=false;
+  }
+  playerBullets=playerBullets.filter(b=>b.active);
+
+  // === DAN DICH ===
+  for(let b of enemyBullets){
+    let [nx,ny]=tp4T(b.x,b.y,b.vx,b.vy); // TP4 tinh tien
+    b.x=nx; b.y=ny;
+    if(dist2(b.x,b.y,px2,py2)<24 && shieldTimer===0){
+      lives--; b.active=false; sfxHurt(); shieldTimer=60;
+      explosion(px2,py2,'small');
+    }
+    if(b.y>H||b.y<0||b.x<0||b.x>W) b.active=false;
+  }
+  enemyBullets=enemyBullets.filter(b=>b.active);
+
+  // === PARTICLES ===
+  for(let p of particles){
+    p.x+=p.vx; p.y+=p.vy;
+    p.vy+=0.18; // trong luc nhe
+    p.vx*=0.98; // ma sat khong khi
+    p.life--;
+    if(p.life<=0) p.active=false;
+  }
+  particles=particles.filter(p=>p.active);
+
+  if(lives<=0){ lives=0; STATE='GAMEOVER'; if(score>highScore) highScore=score; stopBGM(); }
+}
+
+function explosion(x,y,size){
+  let n=size==='big'?36:size==='small'?10:22;
+  let spd=size==='big'?6:size==='small'?2:4;
+  let cls=['#ff4400','#ffaa00','#ffffff','#ff0066','#ffff00','#ff8800'];
+  for(let i=0;i<n;i++)
+    particles.push({
+      x,y,
+      vx:(Math.random()-0.5)*spd*2.5,
+      vy:(Math.random()-0.5)*spd*2.5,
+      life:rnd(10,size==='big'?30:18),
+      col:cls[rnd(0,cls.length)],
+      r:rnd(1,size==='big'?4:2),
+      active:true
+    });
+}
+
+// ================================================================
+// DRAW
+// ================================================================
+function draw(){
+  // Nen vu tru
+  cx.fillStyle='#010008';
+  cx.fillRect(0,0,W,H);
+  drawStars();
+
+  if(STATE==='MENU')    drawMenu();
+  else if(STATE==='HELP')    drawHelp();
+  else if(STATE==='PLAYING') drawPlaying();
+  else if(STATE==='GAMEOVER')drawGameOver();
+}
+
+// ================================================================
+// MENU
+// ================================================================
+function drawMenu(){
+  // TP3: Koch Curve lam nen bau troi tren va duoi
+  kochCurve(0,62,W,62,3,'#220044');
+  kochCurve(0,H-40,W,H-40,3,'#220044');
+
+  // Trang tri goc = Bresenham
+  let goc=18;
+  bLine(0,0,goc,0,'#7700ff',2); bLine(0,0,0,goc,'#7700ff',2);
+  bLine(W-goc,0,W,0,'#7700ff',2); bLine(W,0,W,goc,'#7700ff',2);
+  bLine(0,H-goc,0,H,'#7700ff',2); bLine(0,H,goc,H,'#7700ff',2);
+  bLine(W-goc,H,W,H,'#7700ff',2); bLine(W,H-goc,W,H,'#7700ff',2);
+
+  // Tieu de neon (glow gia lap = ve nhieu lan offset)
+  cx.textAlign='center';
+  for(let [col,blur] of [['#3300aa',6],['#6600cc',3],['#aa00ff',0]]){
+    cx.font='bold 28px Orbitron';
+    cx.fillStyle=col;
+    cx.fillText('GALAXY STRIKER',W/2+blur,95+blur);
+    cx.fillText('GALAXY STRIKER',W/2-blur,95-blur);
+  }
+  cx.font='bold 28px Orbitron';
+  cx.fillStyle='#dd88ff';
+  cx.fillText('GALAXY STRIKER',W/2,95);
+
+  cx.font='11px "Share Tech Mono"';
+  cx.fillStyle='#ff44cc';
+  cx.fillText('★  GAME BAN MAY BAY  ★',W/2,122);
+
+  // May bay menu (TP4: co gian theo sin - nhip tho)
+  let sc=0.82+Math.sin(frame*0.04)*0.08;
+  drawPlayer(W/2,240,sc);
+
+  // Ky luc
+  cx.font='bold 13px Orbitron';
+  cx.fillStyle='#ffcc00';
+  cx.fillText(`KY LUC: ${highScore} DIEM`,W/2,330);
+
+  // Cac nut menu (dung scanlineFill + sLine)
+  let opts=[
+    {k:'1',t:'BAT DAU GAME',  cb:'#004400',cf:'#00ff88',cc:'#00ffaa'},
+    {k:'2',t:'HUONG DAN',     cb:'#000044',cf:'#4488ff',cc:'#88bbff'},
+    {k:'3',t:'THOAT',         cb:'#440000',cf:'#ff2244',cc:'#ff6688'},
+  ];
+  opts.forEach((o,i)=>{
+    let bx=W/2-150, by=365+i*58, bw=300, bh=42;
+    let box=[[bx,by],[bx+bw,by],[bx+bw,by+bh],[bx,by+bh]];
+    sFill(box,o.cb);
+    sLine(box,o.cf,1);
+    // Accent line tren
+    bLine(bx+4,by+2,bx+bw-4,by+2,o.cf);
+    cx.font='bold 12px Orbitron';
+    cx.fillStyle=o.cc;
+    cx.fillText(`[ ${o.k} ]  ${o.t}`,W/2,by+27);
+  });
+
+  if((frame>>5)&1){
+    cx.font='9px "Share Tech Mono"';
+    cx.fillStyle='#555566';
+    cx.fillText('Nhan phim so de chon',W/2,H-18);
+  }
+  cx.textAlign='left';
+}
+
+// ================================================================
+// HUONG DAN
+// ================================================================
+function drawHelp(){
+  cx.fillStyle='#000010'; cx.fillRect(0,0,W,H);
+  // Khung Bresenham
+  for(let i=0;i<3;i++){
+    bLine(i,i,W-i,i,'#7700ff');
+    bLine(i,i,i,H-i,'#7700ff');
+    bLine(W-1-i,i,W-1-i,H-i,'#7700ff');
+    bLine(i,H-1-i,W-i,H-1-i,'#7700ff');
+  }
+  cx.textAlign='center';
+  cx.font='bold 18px Orbitron';
+  cx.fillStyle='#dd88ff'; cx.fillText('HUONG DAN',W/2,48);
+
+  let rows=[
+    {s:'─── DI CHUYEN ───',              c:'#aa66ff',b:true},
+    {s:'← → ↑ ↓  hoac  A W S D',         c:'#ccccff'},
+    {s:'─── TAN CONG ───',               c:'#aa66ff',b:true},
+    {s:'SPACE hoac Z : Ban 3 dan',        c:'#ccccff'},
+    {s:'─── TOC DO KE DICH ───',         c:'#aa66ff',b:true},
+    {s:'Phim 0 : DUNG (ke dich dung lai)',c:'#aaaacc'},
+    {s:'Phim 1 : CHAM  (mac dinh)',       c:'#aaaacc'},
+    {s:'Phim 2 : NHANH',                 c:'#ffaa44'},
+    {s:'Phim 3 : RAT NHANH',             c:'#ff4444'},
+    {s:'─── KE DICH ───',               c:'#aa66ff',b:true},
+    {s:'Do  (gray)  : Ban dan ve ban',    c:'#ff8888'},
+    {s:'Tim (purple): Lao vao ban (2 hit)',c:'#cc88ff'},
+    {s:'Xanh (green): Bay ziz-zag',       c:'#88ff88'},
+    {s:'─── SAU KHI CHET ───',           c:'#aa66ff',b:true},
+    {s:'R : Choi lai  |  M : Ve menu',   c:'#00ff88'},
+    {s:'Phim khac => BI BO QUA HOAN TOAN',c:'#555566'},
+  ];
+  let y=80;
+  for(let r of rows){
+    cx.font=(r.b?'bold ':'')+`${r.b?11:9}px `+(r.b?'Orbitron':'"Share Tech Mono"');
+    cx.fillStyle=r.c;
+    cx.fillText(r.s,W/2,y);
+    y+=r.b?30:22;
+  }
+  if((frame>>4)&1){
+    cx.font='10px Orbitron';
+    cx.fillStyle='#886699';
+    cx.fillText('>> ENTER de quay lai <<',W/2,H-22);
+  }
+  cx.textAlign='left';
+}
+
+// ================================================================
+// PLAYING
+// ================================================================
+function drawPlaying(){
+  // TP3: Koch terrain nen bau troi (phong nen, depth=3)
+  kochCurve(0,58,W,58,3,'#110033');
+
+  // TP3: Ve vat can fractal tree
+  for(let o of fracObs){
+    if(!o.active) continue;
+    // Mau cay thay doi theo toc do
+    let c1=gameSpeed>3?'#885500':'#004400';
+    let c2=gameSpeed>3?'#ffaa00':'#00ff44';
+    fracTree(o.x|0,o.y|0, 90, 5, c1, c2);
+    // Aura canh bao
+    mCircle(o.x|0,o.y|0,55,'#ff440022',false);
+    if((frame>>2)&1) mCircle(o.x|0,o.y|0,52,'#ff4400',false);
+  }
+
+  // Enemy
+  for(let e of enemies) drawEnemy(e.x|0,e.y|0,e.scaleAnim,e.type);
+
+  // Dan player (vien neon)
+  for(let b of playerBullets){
+    bLine(b.x|0,b.y|0,b.x|0,(b.y+16)|0,'#ffff00',2);
+    bLine((b.x-1)|0,b.y|0,(b.x-1)|0,(b.y+10)|0,'#ffffff');
+    mCircle(b.x|0,(b.y+2)|0,3,'#ffffaa',true);
+  }
+
+  // Dan dich
+  for(let b of enemyBullets){
+    mCircle(b.x|0,b.y|0,6,'#ff0000',true);
+    mCircle(b.x|0,b.y|0,6,'#ff6600',false);
+    mCircle(b.x|0,b.y|0,3,'#ffffff',true);
+  }
+
+  // Particles no
+  for(let p of particles){
+    mCircle(p.x|0,p.y|0,p.r,p.col,true);
+  }
+
+  // Player (nhap nhay khi bi thuong)
+  if(shieldTimer===0 || (frame>>1)&1)
+    drawPlayer(px2|0,py2|0,1);
+
+  // Shield ring (khi bat tu)
+  if(shieldTimer>0){
+    let a=shieldTimer/90;
+    mCircle(px2|0,py2|0,50,'#00ffff',false);
+    mCircle(px2|0,py2|0,48,'#0088ff',false);
+  }
+
+  // ========== HUD ==========
+  // Thanh HUD nen
+  sFill([[0,0],[W,0],[W,52],[0,52]],'#06001a');
+  bLine(0,52,W,52,'#7700ff',1);
+
+  // Mang song
+  for(let i=0;i<lives;i++) drawHeart(18+i*28,26,9);
+
+  // Diem so
+  cx.font='bold 16px Orbitron';
+  cx.fillStyle='#ffffff';
+  cx.textAlign='right';
+  cx.fillText(`${score}`,W-16,20);
+  cx.font='9px "Share Tech Mono"';
+  cx.fillStyle='#8855aa';
+  cx.fillText(`HI: ${highScore}`,W-16,36);
+
+  // Toc do hien tai
+  let spNames=['[ 0 ] DUNG','[ 1 ] CHAM','[ 2 ] NHANH','[ 3 ] MAX'];
+  let spCols =['#8888aa',   '#00ff88',   '#ffaa00',     '#ff4444'];
+  cx.font='bold 9px Orbitron';
+  cx.fillStyle=spCols[speedMode||1];
+  cx.textAlign='center';
+  cx.fillText(spNames[speedMode||1],W/2,18);
+
+  // Goi y phim
+  cx.font='7px "Share Tech Mono"';
+  cx.fillStyle='#332244';
+  cx.fillText('0-Dung  1-Cham  2-Nhanh  3-Max   P-Pause',W/2,40);
+
+  cx.textAlign='left';
+
+  // HUD duoi
+  sFill([[0,H-26],[W,H-26],[W,H],[0,H]],'#06001a');
+  bLine(0,H-26,W,H-26,'#330066');
+  cx.font='7px "Share Tech Mono"';
+  cx.fillStyle='#443355';
+  cx.textAlign='center';
+  cx.fillText('← → ↑ ↓ : Di chuyen   |   SPACE : Ban   |   0/1/2/3 : Toc do',W/2,H-10);
+  cx.textAlign='left';
+}
+
+// ================================================================
+// GAME OVER
+// ================================================================
+function drawGameOver(){
+  cx.fillStyle='#020005'; cx.fillRect(0,0,W,H);
+  drawStars();
+
+  // Khung vien do
+  for(let i=0;i<5;i++){
+    let c=i%2===0?'#ff0044':'#880022';
+    bLine(i,i,W-i,i,c); bLine(i,i,i,H-i,c);
+    bLine(W-1-i,i,W-1-i,H-i,c); bLine(i,H-1-i,W-i,H-1-i,c);
+  }
+  // Koch nen
+  kochCurve(0,80,W,80,3,'#220011');
+  kochCurve(0,H-60,W,H-60,3,'#220011');
+
+  cx.textAlign='center';
+
+  // GAME OVER (glow)
+  for(let [col,off] of [['#660011',5],['#bb0033',2],['#ff0044',0]]){
+    cx.font='bold 34px Orbitron';
+    cx.fillStyle=col;
+    cx.fillText('GAME OVER',W/2+off,170+off);
+    cx.fillText('GAME OVER',W/2-off,170-off);
+  }
+  cx.font='bold 34px Orbitron';
+  cx.fillStyle='#ff4466';
+  cx.fillText('GAME OVER',W/2,170);
+
+  cx.font='bold 15px Orbitron';
+  cx.fillStyle='#ffffff';
+  cx.fillText(`DIEM: ${score}`,W/2,225);
+
+  if(score>0&&score>=highScore){
+    cx.font='bold 12px Orbitron';
+    cx.fillStyle='#ffcc00';
+    cx.fillText('★  KY LUC MOI!  ★',W/2,258);
+  } else {
+    cx.font='11px "Share Tech Mono"';
+    cx.fillStyle='#aa4466';
+    cx.fillText(`KY LUC: ${highScore}`,W/2,258);
+  }
+
+  // Nut R
+  let bx1=70,by=300,bh=48;
+  sFill([[bx1,by],[bx1+160,by],[bx1+160,by+bh],[bx1,by+bh]],'#001500');
+  sLine([[bx1,by],[bx1+160,by],[bx1+160,by+bh],[bx1,by+bh]],'#00ff88');
+  bLine(bx1+4,by+3,bx1+156,by+3,'#00cc66');
+  cx.font='bold 11px Orbitron';
+  cx.fillStyle='#00ff88';
+  cx.fillText('[ R ]  CHOI LAI',bx1+80,by+29);
+
+  // Nut M
+  let bx2=290;
+  sFill([[bx2,by],[bx2+160,by],[bx2+160,by+bh],[bx2,by+bh]],'#000015');
+  sLine([[bx2,by],[bx2+160,by],[bx2+160,by+bh],[bx2,by+bh]],'#4488ff');
+  bLine(bx2+4,by+3,bx2+156,by+3,'#2255cc');
+  cx.font='bold 11px Orbitron';
+  cx.fillStyle='#4488ff';
+  cx.fillText('[ M ]  MENU',bx2+80,by+29);
+
+  cx.font='8px "Share Tech Mono"';
+  cx.fillStyle='#332244';
+  cx.fillText('Phim khac se bi bo qua hoan toan',W/2,380);
+
+  // Ve may bay nho (TP4 quay - quay 180 do = dau xuong)
+  let sc2=0.55;
+  // Quay nguoc = ve nguoc toa do
+  cx.save();
+  cx.translate(W/2,460);
+  cx.rotate(Math.PI);
+  cx.translate(-W/2,-460);
+  drawPlayer(W/2,460,sc2);
+  cx.restore();
+
+  cx.textAlign='left';
+}
+
+// ================================================================
+// LOOP CHINH
+// ================================================================
+function loop(){
+  update();
+  draw();
+  frame++;
+  requestAnimationFrame(loop);
+}
+
+initStars();
+loop();
+</script>
+</body>
+</html>
