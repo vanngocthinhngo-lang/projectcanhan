@@ -1,0 +1,198 @@
+body{
+    margin-top: 250px;
+}
+.class{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+}
+.class1 {
+    display: flex;
+    align-items: center;     
+    justify-content: center;  
+    gap: 10px;
+    background-color: rgb(77, 5, 5);
+    color: yellow;
+    background: linear-gradient(
+        90deg,
+        #8b0d1a,
+        #b53c48,
+        #c94858,
+        #aa3841,
+        #8b0d1a
+    );
+
+    background-size: 300% 100%;
+    animation: shineMove 3s linear infinite;
+}
+@keyframes shineMove {
+    0% {
+        background-position: 0% 0;
+    }
+    100% {
+        background-position: 300% 0;
+    }
+}
+.class1a{
+    color: white;
+}
+.class2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+.class2a input{
+    border-radius: 10px;
+    width: 400px;
+    height: 30px;
+}
+.class2 h1{
+    text-shadow: 2px 1px rgb(143, 18, 18);
+}
+.class3a{
+    display: flex;
+    list-style-type: none;
+    gap:20px;
+}
+.class3a a{
+    color: black;
+}
+.class4{
+    margin-left: 300px;
+}
+.class4, .class5, .class6, .class7,.class8,.class9 {
+    position: relative;
+    display: inline-block;
+}
+.class4a {
+    background: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+.class4a:hover{
+    color: rgb(115, 5, 5);
+}
+.class4b {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 150px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+    padding: 0;
+    z-index: 999;
+}
+
+.class4b a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ccc;
+}
+
+.class4b a:hover {
+    background: #f0f0f0;
+    color: rgb(114, 4, 4);
+}
+
+.class4:hover .class4b,.class5:hover .class4b,.class6:hover .class4b,.class7:hover .class4b,.class8:hover .class4b {
+    display: block;
+}
+.class10{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.class10 fieldset{
+    width: 600px;
+    height: 850px;
+}
+.class10a{
+    text-align: center;
+}
+.class10b input,.class10c input,.class10e input,.class10f input,.class10g input,.class10h input{
+    height: 30px;
+    width: 550px;
+}
+.class10i{
+    text-align: center;
+    display: block;
+}
+.class10i a{
+    text-decoration: none;
+    color: black;
+}
+.class10i a:hover{
+    color: red;
+}
+.class10i button{
+    margin: 0 auto;
+    width: 550px;
+    height: 40px;
+    background: rgb(156, 0, 0);
+    margin-bottom: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.5s ease;
+}
+.class10i button:hover{
+    color: black;
+    background: white;
+}
+.class21 {
+    display: flex;         
+    gap: 10px;
+    margin-left: 800px;   
+    margin-bottom: 40px;
+}
+
+.class21 > div {
+    display: flex;          
+    align-items: center;   
+    gap: 10px;     
+}
+
+.class21 a {
+    text-decoration: none;
+    color: inherit;
+} 
+.class22a{
+    margin-left: 200px;
+}
+.class22a img{
+    width: 30px;
+    height: 30px;
+}
+.class22{
+    display: flex;
+    gap: 250px;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+.class23{
+    font-size: 20px;
+    background-color: rgb(77, 5, 5);
+    padding: 1px 0;
+    text-align: center;
+    color: white;
+}
+.class11{
+    font-size: 30px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    bottom: 100px;
+    right: 20px;
+}
+.class11 a{
+    color: black;
+}
