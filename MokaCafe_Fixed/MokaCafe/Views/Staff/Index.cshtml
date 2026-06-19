@@ -1,0 +1,115 @@
+@model MokaCafe.Models.StaffDashboardVM
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = ViewData["PageTitle"] = "Dashboard";
+}
+
+<!-- Form Lọc Ngày Tháng và Nút Xuất Excel -->
+<form method="get" class="d-flex justify-content-end mb-3 gap-2">
+    <input type="date" name="tuNgay" class="form-control" style="width:150px" value="@ViewBag.TuNgay" />
+    <span class="align-self-center text-muted">—</span>
+    <input type="date" name="denNgay" class="form-control" style="width:150px" value="@ViewBag.DenNgay" />
+
+    <button type="submit" asp-action="Index" class="btn btn-primary">Lọc</button>
+
+    <!-- Nút Xuất báo cáo Excel -->
+    <a href="/Staff/XuatBaoCao?tuNgay=@ViewBag.TuNgay&denNgay=@ViewBag.DenNgay" class="btn btn-success">
+        <i class="fa fa-file-excel"></i> Xuất Excel
+    </a>
+</form>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Doanh thu</div>
+            <div class="stat-value" style="font-size:1.2rem">@Model.DoanhThuHomNay.ToString("N0")đ</div>
+            <div class="stat-change">↑ @Model.SoLuongTangThem đơn (@Model.TyLeTangTruong%)</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Đơn hàng</div>
+            <div class="stat-value">@Model.TongDonHomNay</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Khách hàng mới</div>
+            <div class="stat-value">@Model.KhachMoi</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Sản phẩm bán chạy</div>
+            <div class="stat-value">@Model.SanPhamBanChay</div>
+        </div>
+    </div>
+</div>
+
+<div class="chart-card mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="chart-title">Doanh thu theo thời gian</div>
+    </div>
+    <canvas id="weeklyChart" height="80"></canvas>
+</div>
+
+<h5 class="fw-bold mb-3">Món bán chạy nhất</h5>
+<div class="row g-3">
+    @if (Model.BestSellers != null && Model.BestSellers.Any())
+    {
+        @foreach (var m in Model.BestSellers)
+        {
+            <div class="col-6 col-md-3">
+                <div class="bestseller-card h-100">
+                    <div class="bestseller-emoji" style="font-size: 2rem;">@m.MonAn?.Emoji</div>
+                    <div class="p-2">
+                        <div class="fw-semibold small">@m.MonAn?.TenMon</div>
+                        <div class="text-muted small">Đã bán: @m.SoLuongBan.ToString("N0")</div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12"><p class="text-muted">Không có dữ liệu trong khoảng thời gian này.</p></div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        const labels = @Html.Raw(Json.Serialize(Model.Nhan7Ngay));
+        const data = @Html.Raw(Json.Serialize(Model.DoanhThu7Ngay));
+
+        new Chart(document.getElementById('weeklyChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: data,
+                    borderColor: '#8B4513',
+                    backgroundColor: 'rgba(139,69,19,0.07)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#8B4513'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString('vi') + 'đ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

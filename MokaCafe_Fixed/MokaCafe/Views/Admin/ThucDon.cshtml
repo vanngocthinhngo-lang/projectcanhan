@@ -1,0 +1,24 @@
+@model List<MokaCafe.Models.MonAn>
+@{ Layout="~/Views/Shared/_DashLayout.cshtml"; ViewData["Title"]=ViewData["PageTitle"]="Quản lý Thực đơn"; }
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Tổng số món</div><div class="stat-value">@ViewBag.Tong</div></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Món đang bán chạy</div><div class="stat-value text-success">@ViewBag.ConHang</div></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Món đã hết hàng</div><div class="stat-value text-danger">@ViewBag.HetHang</div></div></div>
+</div>
+<div class="table-card">
+  <div class="table-toolbar">
+    <form method="get" class="d-flex gap-2"><div class="search-wrap"><i class="bi bi-search search-icon-in"></i><input type="text" name="search" value="@ViewBag.Search" class="form-control ps-5" placeholder="Tìm kiếm món ăn..."/></div><button type="submit" class="btn btn-outline-secondary">Lọc</button></form>
+    <a href="/Admin/ThemMon" class="btn btn-brown"><i class="bi bi-plus-lg me-1"></i>Thêm món mới</a>
+  </div>
+  <div class="table-responsive"><table class="table table-hover mb-0">
+    <thead><tr><th>Hình ảnh/Tên món</th><th>Danh mục</th><th>Giá bán</th><th>Trạng thái</th><th>Tồn kho</th><th>Thao tác</th></tr></thead>
+    <tbody>@foreach(var m in Model){
+      <tr><td><div class="d-flex align-items-center gap-2">@if(!string.IsNullOrEmpty(m.HinhAnh)){<img src="@m.HinhAnh" style="width:38px;height:38px;border-radius:8px;object-fit:cover"/>}else{<div class="item-thumb">@m.Emoji</div>}<span class="fw-semibold">@m.TenMon</span></div></td>
+      <td>@m.DanhMuc?.TenDanhMuc</td><td class="text-brown fw-semibold">@m.GiaBan.ToString("N0")đ</td>
+      <td><span class="badge @(m.TrangThai=="Còn hàng"?"badge-green":"badge-red")">@m.TrangThai</span></td><td>@m.SoLuongTon</td>
+      <td><div class="d-flex gap-2"><a href="/Admin/SuaMon/@m.MaMon" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i> Sửa</a>
+        <form method="post" action="/Admin/XoaMon/@m.MaMon" onsubmit="return confirm('Xóa món @m.TenMon?')">@Html.AntiForgeryToken()<button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Xóa</button></form>
+      </div></td></tr>
+    }</tbody>
+  </table></div>
+</div>

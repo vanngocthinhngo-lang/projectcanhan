@@ -1,0 +1,59 @@
+@model List<MokaCafe.Models.DonHang>
+@{
+    Layout = "~/Views/Shared/_ClientLayout.cshtml"; ViewData["Title"] = "Lịch sử đơn hàng";
+}
+
+<div class="container-xl py-4">
+    <h2 class="section-title mb-4">📦 Lịch sử đơn hàng</h2>
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5"><div style="font-size:64px">📦</div><h5 class="mt-3 text-muted">Bạn chưa có đơn hàng nào</h5><a href="/Home/Menu" class="btn btn-brown mt-3 rounded-pill px-5">Đặt hàng ngay</a></div>
+    }
+    else
+    {
+        @foreach (var don in Model)
+        {
+            <div class="chart-card mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <span class="fw-bold">@don.MaDonHangHienThi</span>
+                        <span class="text-muted small ms-2">@don.NgayDat.ToString("HH:mm dd/MM/yyyy")</span>
+                    </div>
+                    <!-- Thêm nút xem chi tiết ở đây -->
+                    <button type="button" class="btn btn-sm btn-outline-brown rounded-pill"
+                            onclick="xemChiTiet(@don.MaDonHang)">
+                        Xem chi tiết
+                    </button>
+                </div>
+                <!-- ... nội dung món ăn cũ của bạn ... -->
+                @foreach (var it in don.ChiTietDonHangs)
+                {
+                    <div class="d-flex gap-2 mb-2 align-items-center"><div class="oci-img">@it.MonAn?.Emoji</div><span class="small">@it.MonAn?.TenMon x@it.SoLuong — @it.MucDuong, @it.MucDa</span></div>
+                }
+                <hr />
+                <div class="d-flex justify-content-between align-items-center"><span class="text-muted small">@don.LoaiDon · @don.ThanhToan?.PhuongThuc</span><span class="fw-bold text-brown">@don.TongTien.ToString("N0")đ</span></div>
+            </div>
+        }
+    }
+</div>
+
+<!-- Modal chi tiết đơn hàng -->
+<div class="modal fade" id="modalChiTiet" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0"><h5 class="modal-title">Chi tiết đơn hàng</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body" id="noiDungChiTiet">Đang tải...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function xemChiTiet(id) {
+        var modal = new bootstrap.Modal(document.getElementById('modalChiTiet'));
+        modal.show();
+        // Load nội dung bằng Ajax (nhớ tạo hàm ChiTietDonHang trong HomeController)
+        fetch('/Home/ChiTietDonHang/' + id)
+            .then(res => res.text())
+            .then(html => document.getElementById('noiDungChiTiet').innerHTML = html);
+    }
+</script>

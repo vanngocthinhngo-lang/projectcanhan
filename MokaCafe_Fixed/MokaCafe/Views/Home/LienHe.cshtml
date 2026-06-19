@@ -1,0 +1,42 @@
+@{ Layout="~/Views/Shared/_ClientLayout.cshtml"; ViewData["Title"]="Liên hệ"; }
+<div class="container-xl py-5">
+  <h2 class="section-title mb-4">📞 Liên hệ</h2>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success mt-3 shadow-sm">@TempData["Message"]</div>
+    }
+  <div class="row g-4">
+    <div class="col-md-5"><div class="chart-card h-100"><h5 class="fw-bold mb-4">Thông tin liên hệ</h5>
+      @foreach(var i in new[]{("📍","Địa chỉ","123 Lê Duẩn, Quận Hải Châu, Đà Nẵng"),("📞","Điện thoại","0901 234 567"),("📧","Email","hello@mokacafe.vn"),("🕐","Giờ mở cửa","07:00 – 22:00, Tất cả các ngày")}){
+        <div class="d-flex gap-3 mb-4"><div style="font-size:22px;width:36px;text-align:center">@i.Item1</div><div><div class="fw-semibold small mb-1">@i.Item2</div><div class="text-muted small">@i.Item3</div></div></div>}
+    </div></div>
+        <div class="col-md-7">
+            <div class="chart-card">
+                <h5 class="fw-bold mb-4">Gửi phản hồi</h5>
+                <!-- Thêm form method="post" và asp-action -->
+                <form asp-action="GuiPhanHoi" method="post" class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Họ tên</label>
+                        <input name="HoTen" class="form-control" placeholder="Nguyễn Văn A" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Email</label>
+                        <input name="Email" type="email" class="form-control" placeholder="email@example.com" required />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-semibold">Chủ đề</label>
+                        <input name="ChuDe" class="form-control" placeholder="Nhập chủ đề..." required />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-semibold">Nội dung</label>
+                        <textarea name="NoiDung" class="form-control" rows="4" placeholder="Nhập nội dung phản hồi..." required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <!-- Nút submit để gửi form đi -->
+                        <button type="submit" class="btn btn-brown px-4 fw-bold rounded-pill">Gửi phản hồi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+@model MokaCafe.Models.CauHinhHeThong
+@{ Layout="~/Views/Shared/_DashLayout.cshtml"; ViewData["Title"]=ViewData["PageTitle"]="Cấu hình Hệ thống"; }
+<form asp-action="CaiDat" method="post">@Html.AntiForgeryToken()<input asp-for="MaCauHinh" type="hidden"/>
+  <div class="row g-4">
+    <div class="col-md-6"><div class="chart-card h-100"><h6 class="fw-bold mb-3">🏪 Thông tin quán</h6>
+      <div class="mb-3"><label class="form-label small fw-semibold">Tên quán</label><input asp-for="TenQuan" class="form-control"/></div>
+      <div class="mb-3"><label class="form-label small fw-semibold">Địa chỉ</label><input asp-for="DiaChi" class="form-control"/></div>
+      <div class="mb-3"><label class="form-label small fw-semibold">Số điện thoại</label><input asp-for="SoDienThoai" class="form-control"/></div>
+      <div class="mb-3"><label class="form-label small fw-semibold">Giờ mở/đóng cửa</label><input asp-for="GioMoCua" class="form-control" placeholder="07:00 - 22:00"/></div>
+    </div></div>
+    <div class="col-md-6">
+      <div class="chart-card mb-4"><h6 class="fw-bold mb-3">🚚 Phí giao hàng</h6>
+        <div class="mb-3"><label class="form-label small fw-semibold">Phí giao hàng cơ bản (đ)</label><input asp-for="PhiGiaoHangCoBan" class="form-control" type="number"/></div>
+        <div class="mb-3"><label class="form-label small fw-semibold">Miễn phí từ đơn tối thiểu (đ)</label><input asp-for="DonToiThieuMienPhi" class="form-control" type="number"/></div>
+        <div class="mb-3"><label class="form-label small fw-semibold">Phạm vi giao hàng (km)</label><input asp-for="PhamViGiaoHang_km" class="form-control" type="number"/></div>
+      </div>
+      <div class="chart-card"><h6 class="fw-bold mb-3">🔑 Cài đặt tài khoản</h6>
+        <a href="#" class="d-flex justify-content-between align-items-center text-decoration-none py-2 border-bottom"><span class="small text-dark">Đổi mật khẩu Admin</span><i class="bi bi-chevron-right text-muted"></i></a>
+        <a href="#" class="d-flex justify-content-between align-items-center text-decoration-none py-2"><span class="small text-dark">Cập nhật Email nhận thông báo</span><i class="bi bi-chevron-right text-muted"></i></a>
+      </div>
+    </div>
+    <div class="col-md-6"><div class="chart-card"><h6 class="fw-bold mb-3">🔔 Thông báo</h6>
+      @foreach(var item in new[]{("ThongBaoDonMoi","Thông báo đơn mới"),("CanhBaoHangHet","Cảnh báo hàng hết"),("BaoCaoCuoiNgay","Báo cáo cuối ngày"),("SMSThongBaoKH","SMS thông báo KH")}){
+        <div class="d-flex justify-content-between align-items-center py-2 border-bottom"><label class="form-label small mb-0">@item.Item2</label>
+          <div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" name="@item.Item1" value="true" @(Model.GetType().GetProperty(item.Item1)?.GetValue(Model) is true?"checked":"") /></div>
+        </div>}
+    </div></div>
+    <div class="col-md-6"><div class="chart-card"><h6 class="fw-bold mb-3">💳 Thanh toán</h6>
+      @foreach(var item in new[]{("HoTroTienMat","Tiền mặt"),("HoTroMoMo","MoMo"),("HoTroChuyenKhoan","Chuyển khoản ngân hàng"),("HoTroTheTinDung","Thẻ tín dụng")}){
+        <div class="d-flex justify-content-between align-items-center py-2 border-bottom"><label class="form-label small mb-0">@item.Item2</label>
+          <div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" name="@item.Item1" value="true" @(Model.GetType().GetProperty(item.Item1)?.GetValue(Model) is true?"checked":"") /></div>
+        </div>}
+      <div class="d-flex justify-content-between align-items-center py-2"><label class="form-label small mb-0">Trạng thái cửa hàng</label>
+        <div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" name="DangMoCua" value="true" @(Model.DangMoCua?"checked":"") /></div>
+      </div>
+    </div></div>
+  </div>
+  <div class="mt-4"><button type="submit" class="btn btn-brown px-5 fw-bold">💾 Lưu cấu hình</button></div>
+</form>

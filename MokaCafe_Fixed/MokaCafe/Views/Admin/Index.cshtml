@@ -1,0 +1,159 @@
+@model MokaCafe.Models.AdminDashboardVM
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = ViewData["PageTitle"] = "Admin — Bảng điều khiển Tổng quát";
+}
+
+<div class="d-flex justify-content-between align-items-center p-3 mb-4" style="background:#fff; box-shadow:var(--shadow); border-radius:12px">
+    <span class="fw-semibold text-muted">Tổng số đơn hàng trong ngày:</span>
+    <span style="font-size:2rem; font-weight:800; color:var(--brown-dark); font-family:'Playfair Display', serif">@Model.TongDonHomNay</span>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Doanh thu hôm nay</div>
+            <div class="stat-value" style="font-size:1.2rem">@Model.DoanhThuHomNay.ToString("N0")đ</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Tổng khách hàng</div>
+            <div class="stat-value">@Model.TongKhachHang</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Tổng món ăn</div>
+            <div class="stat-value">@Model.TongMonAn</div>
+            <div class="stat-change text-success">Còn hàng: @Model.MonConHang</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Món hết hàng</div>
+            <div class="stat-value text-danger">@Model.MonHetHang</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-8">
+        <div class="chart-card" style="height: 400px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="chart-title">Biểu đồ Doanh thu Tổng hợp</div>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-brown btn-sm" id="btnNgay">Ngày</button>
+                    <button class="btn btn-outline-brown btn-sm" id="btnThang">Tháng</button>
+                    <button class="btn btn-outline-brown btn-sm" id="btnNam">Năm</button>
+                </div>
+            </div>
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="chart-card">
+            <div class="chart-title mb-3">Tỷ trọng Bán hàng</div>
+            <canvas id="pieChart" height="160"></canvas>
+            <div class="d-flex gap-3 justify-content-center mt-2 small">
+                <span><span style="color:#2980B9">■</span> Online (@Model.TyLeTrucTuyen%)</span>
+                <span><span style="color:#E67E22">■</span> Offline (@Model.TyLeTaiQuan%)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="chart-card mb-4">
+    <div class="chart-title mb-3">Xuất báo cáo doanh thu</div>
+    <form asp-action="XuatBaoCaoAdmin" method="get" class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label class="small text-muted">Từ ngày:</label>
+            <input type="date" name="tuNgay" class="form-control" required />
+        </div>
+        <div class="col-md-4">
+            <label class="small text-muted">Đến ngày:</label>
+            <input type="date" name="denNgay" class="form-control" required />
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-brown w-100">Xuất Excel</button>
+        </div>
+    </form>
+</div>
+
+<div class="chart-card">
+    <div class="chart-title mb-3">Món bán chạy</div>
+    <div class="row g-3">
+        @foreach (var m in Model.BestSellers)
+        {
+            <div class="col-6 col-md-3">
+                <div class="bestseller-card">
+                    <div class="bestseller-emoji">@m.Emoji</div>
+                    <div class="p-2">
+                        <div class="fw-semibold small">@m.TenMon</div>
+                        <div class="text-muted small">@m.GiaBan.ToString("N0")đ</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let revenueChart;
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+
+        function renderChart(labels, data) {
+        return new Chart(ctx, {
+        type: 'line',
+        data: {
+        labels: labels,
+        datasets: [{
+        label: 'Doanh thu',
+        data: data,
+        borderColor: '#8B4513',
+        backgroundColor: 'rgba(139, 69, 19, 0.1)',
+        tension: 0.4,
+        fill: true
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+        y: {
+        beginAtZero: true,
+        min: 0,
+        ticks: { callback: v => v.toLocaleString('vi') + 'đ' }
+        }
+        }
+        }
+        });
+        }
+
+        revenueChart = renderChart(@Html.Raw(Json.Serialize(Model.Nhan7Ngay)), @Html.Raw(Json.Serialize(Model.DoanhThu7Ngay)));
+
+        async function updateChart(type, btn) {
+        document.querySelectorAll('.btn-group button').forEach(b => b.className = 'btn btn-outline-brown btn-sm');
+        btn.className = 'btn btn-brown btn-sm';
+
+        try {
+        const response = await fetch(`/Admin/GetRevenueData?type=${type}`);
+        const result = await response.json();
+
+        if (revenueChart) {
+        revenueChart.destroy();
+        }
+
+        revenueChart = renderChart(result.labels, result.data);
+        } catch (e) {
+        console.error("Lỗi khi cập nhật biểu đồ:", e);
+        }
+        }
+
+        document.getElementById('btnNgay').addEventListener('click', function() { updateChart('day', this); });
+        document.getElementById('btnThang').addEventListener('click', function() { updateChart('month', this); });
+        document.getElementById('btnNam').addEventListener('click', function() { updateChart('year', this); });
+    </script>
+}

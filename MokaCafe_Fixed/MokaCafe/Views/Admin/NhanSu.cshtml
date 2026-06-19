@@ -1,0 +1,26 @@
+@model List<MokaCafe.Models.NguoiDung>
+@{ Layout="~/Views/Shared/_DashLayout.cshtml"; ViewData["Title"]=ViewData["PageTitle"]="Quản lý Nhân sự"; }
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Tổng nhân sự</div><div class="stat-value">@ViewBag.Tong</div></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Nhân viên đang trong ca</div><div class="stat-value text-success">@ViewBag.DangLam</div></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Nhân viên mới trong tháng</div><div class="stat-value">@ViewBag.NghiViec</div></div></div>
+</div>
+<div class="table-card">
+  <div class="table-toolbar">
+    <form method="get" class="d-flex gap-2"><div class="search-wrap"><i class="bi bi-search search-icon-in"></i><input type="text" name="search" class="form-control ps-5" placeholder="Tìm kiếm nhân viên..."/></div><button type="submit" class="btn btn-outline-secondary">Lọc</button></form>
+    <a href="/Admin/ThemNhanVien" class="btn btn-brown"><i class="bi bi-plus-lg me-1"></i>Thêm nhân viên mới</a>
+  </div>
+  <div class="table-responsive"><table class="table table-hover mb-0">
+    <thead><tr><th>Ảnh/Họ tên</th><th>Chức vụ</th><th>Số điện thoại</th><th>Ngày bắt đầu</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+    <tbody>@foreach(var u in Model){
+      <tr><td><div class="d-flex align-items-center gap-2"><div class="item-thumb">👤</div><span class="fw-semibold">@u.HoTen</span></div></td>
+      <td>@(u.HoSoNhanVien?.ChucVuNhanVien?.TenChucVu??u.VaiTro?.TenVaiTro)</td><td>@u.SoDienThoai</td>
+      <td>@u.HoSoNhanVien?.NgayVaoLam?.ToString("dd/MM/yyyy")</td>
+      <td><span class="badge @(u.KichHoat?"badge-green":"badge-red")">@(u.KichHoat?"Đang làm việc":"Nghỉ việc")</span></td>
+      <td><div class="d-flex gap-2">
+        <form method="post" action="/Admin/DoiTrangThaiNV/@u.MaNguoiDung">@Html.AntiForgeryToken()<button type="submit" class="btn btn-sm @(u.KichHoat?"btn-outline-warning":"btn-outline-success")">@(u.KichHoat?"Vô hiệu hóa":"Kích hoạt")</button></form>
+        <form method="post" action="/Admin/XoaNhanVien/@u.MaNguoiDung" onsubmit="return confirm('Xóa nhân viên @u.HoTen?')">@Html.AntiForgeryToken()<button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form>
+      </div></td></tr>
+    }</tbody>
+  </table></div>
+</div>

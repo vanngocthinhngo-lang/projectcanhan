@@ -1,0 +1,35 @@
+﻿@model MokaCafe.Models.DonHang
+<style>
+    body {
+        font-family: sans-serif;
+        padding: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .text-end {
+        text-align: right;
+    }
+</style>
+<h2>Hóa đơn #@Model.MaDonHangHienThi</h2>
+<p>Khách hàng: @(Model.KhachHang?.HoTen ?? "Khách lẻ")</p>
+<table>
+    <thead><tr><th>Món</th><th>SL</th><th>Đơn giá</th></tr></thead>
+    <tbody>
+        @foreach (var it in Model.ChiTietDonHangs)
+        {
+            <tr><td>@it.MonAn?.TenMon</td><td>@it.SoLuong</td><td>@it.DonGia.ToString("N0")đ</td></tr>
+        }
+    </tbody>
+</table>
+<h3>Tổng: @Model.TongTien.ToString("N0")đ</h3>
+<script>window.print();</script>

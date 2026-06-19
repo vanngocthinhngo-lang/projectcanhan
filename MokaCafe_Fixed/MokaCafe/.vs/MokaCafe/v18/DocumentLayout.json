@@ -1,0 +1,543 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\models\\models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:models\\models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\shared\\_formphanhoi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\shared\\_formphanhoi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\home\\_chitietdonhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\home\\_chitietdonhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\home\\lienhe.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\home\\lienhe.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\home\\lichsudonhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\home\\lichsudonhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\admin\\khachhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\admin\\khachhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\admin\\doanhthu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\admin\\doanhthu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\controllers\\staffcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:controllers\\staffcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\.nuget\\packages\\epplus\\6.2.19\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\.nuget\\packages\\epplus\\8.6.0\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\lichsutatca.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\lichsutatca.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\caidat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\caidat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\donhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\donhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\baocao.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\baocao.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\inhoadon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\inhoadon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\shared\\_modalmon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\shared\\_modalmon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\shared\\_dashlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\shared\\_dashlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\thucdon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\thucdon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\staff\\taodon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\staff\\taodon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\controllers\\giohangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:controllers\\giohangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\data\\orderautocompletionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:data\\orderautocompletionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\home\\menu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\home\\menu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|d:\\ngocthinh\\ltcsharp\\mokacafe_fixed\\mokacafe\\views\\giohang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A8C8E46-8ECD-3396-E3E6-B70F7E08E19D}|MokaCafe.csproj|solutionrelative:views\\giohang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContextModelSnapshot.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\AppDbContextModelSnapshot.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\AppDbContextModelSnapshot.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAowD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T16:48:29.879Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Models.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Models\\Models.cs",
+              "RelativeDocumentMoniker": "Models\\Models.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Models\\Models.cs",
+              "RelativeToolTip": "Models\\Models.cs",
+              "ViewState": "AgIAAGgBAAAAAAAAAAAiwHABAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T15:33:11.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAiwBYAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T05:58:43.844Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-05T11:08:59.142Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T15:48:27.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_FormPhanHoi.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_FormPhanHoi.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_FormPhanHoi.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_FormPhanHoi.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_FormPhanHoi.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T15:50:01.705Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "LienHe.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\LienHe.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\LienHe.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\LienHe.cshtml",
+              "RelativeToolTip": "Views\\Home\\LienHe.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T15:16:44.107Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_ChiTietDonHang.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\_ChiTietDonHang.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\_ChiTietDonHang.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\_ChiTietDonHang.cshtml",
+              "RelativeToolTip": "Views\\Home\\_ChiTietDonHang.cshtml",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAkwCcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T14:53:49.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAAAKwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T14:07:59.432Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAJ0AAAAAAAAAAADwv6sAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-04T18:00:14.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "LichSuDonHang.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\LichSuDonHang.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\LichSuDonHang.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\LichSuDonHang.cshtml",
+              "RelativeToolTip": "Views\\Home\\LichSuDonHang.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T14:50:16.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "readme.txt",
+              "DocumentMoniker": "C:\\Users\\PC\\.nuget\\packages\\epplus\\6.2.19\\readme.txt",
+              "ToolTip": "C:\\Users\\PC\\.nuget\\packages\\epplus\\6.2.19\\readme.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-06-05T11:16:49.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Admin\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\Index.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Admin\\Index.cshtml",
+              "RelativeToolTip": "Views\\Admin\\Index.cshtml",
+              "ViewState": "AgIAAIYAAAAAAAAAAADwv54AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T11:53:09.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DoanhThu.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Admin\\DoanhThu.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\DoanhThu.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Admin\\DoanhThu.cshtml",
+              "RelativeToolTip": "Views\\Admin\\DoanhThu.cshtml",
+              "ViewState": "AgIAAEwAAAAAAAAAAADwv2cAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T14:09:18.852Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "KhachHang.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Admin\\KhachHang.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\KhachHang.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Admin\\KhachHang.cshtml",
+              "RelativeToolTip": "Views\\Admin\\KhachHang.cshtml",
+              "ViewState": "AgIAAD0AAAAAAAAAAADwv1gAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T14:39:45.624Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "StaffController.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\StaffController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StaffController.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\StaffController.cs",
+              "RelativeToolTip": "Controllers\\StaffController.cs",
+              "ViewState": "AgIAANcAAAAAAAAAAAAswP4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T11:00:37.912Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T10:55:20.177Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "readme.txt",
+              "DocumentMoniker": "C:\\Users\\PC\\.nuget\\packages\\epplus\\8.6.0\\readme.txt",
+              "ToolTip": "C:\\Users\\PC\\.nuget\\packages\\epplus\\8.6.0\\readme.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-06-05T10:50:01.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\Index.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\Index.cshtml",
+              "RelativeToolTip": "Views\\Staff\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T10:35:42.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CaiDat.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\CaiDat.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\CaiDat.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\CaiDat.cshtml",
+              "RelativeToolTip": "Views\\Staff\\CaiDat.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T05:41:36.945Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "LichSuTatCa.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\LichSuTatCa.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\LichSuTatCa.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\LichSuTatCa.cshtml",
+              "RelativeToolTip": "Views\\Staff\\LichSuTatCa.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAADwv3QAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T01:44:39.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "_ModalMon.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_ModalMon.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_ModalMon.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_ModalMon.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_ModalMon.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAUwDkAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-04T17:23:53.432Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DonHang.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\DonHang.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\DonHang.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\DonHang.cshtml",
+              "RelativeToolTip": "Views\\Staff\\DonHang.cshtml",
+              "ViewState": "AgIAAHwAAAAAAAAAAADwv4kAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T01:28:33.57Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "BaoCao.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\BaoCao.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\BaoCao.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\BaoCao.cshtml",
+              "RelativeToolTip": "Views\\Staff\\BaoCao.cshtml",
+              "ViewState": "AgIAAEAAAAAAAAAAAADwv04AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-04T15:45:40.806Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "InHoaDon.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\InHoaDon.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\InHoaDon.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\InHoaDon.cshtml",
+              "RelativeToolTip": "Views\\Staff\\InHoaDon.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T05:01:58.673Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "_DashLayout.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_DashLayout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_DashLayout.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Shared\\_DashLayout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_DashLayout.cshtml",
+              "ViewState": "AgIAAB0AAAAAAAAAAADwvzgAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T03:21:44.376Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\GioHang\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\GioHang\\Index.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\GioHang\\Index.cshtml",
+              "RelativeToolTip": "Views\\GioHang\\Index.cshtml",
+              "ViewState": "AgIAADwAAAAAAAAAAAAUwE0AAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-04T17:44:43.712Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ThucDon.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\ThucDon.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\ThucDon.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\ThucDon.cshtml",
+              "RelativeToolTip": "Views\\Staff\\ThucDon.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T03:25:33.049Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "TaoDon.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\TaoDon.cshtml",
+              "RelativeDocumentMoniker": "Views\\Staff\\TaoDon.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Staff\\TaoDon.cshtml",
+              "RelativeToolTip": "Views\\Staff\\TaoDon.cshtml",
+              "ViewState": "AgIAACMAAAAAAAAAAADwvz4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T03:19:06.65Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "GioHangController.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\GioHangController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GioHangController.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Controllers\\GioHangController.cs",
+              "RelativeToolTip": "Controllers\\GioHangController.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAUwHMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-04T17:16:56.849Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "OrderAutoCompletionService.cs",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Data\\OrderAutoCompletionService.cs",
+              "RelativeDocumentMoniker": "Data\\OrderAutoCompletionService.cs",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Data\\OrderAutoCompletionService.cs",
+              "RelativeToolTip": "Data\\OrderAutoCompletionService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAswCIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T01:31:37.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Menu.cshtml",
+              "DocumentMoniker": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\Menu.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Menu.cshtml",
+              "ToolTip": "D:\\ngocthinh\\LTCSharp\\MokaCafe_Fixed\\MokaCafe\\Views\\Home\\Menu.cshtml",
+              "RelativeToolTip": "Views\\Home\\Menu.cshtml",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAUwIIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-04T16:55:54.947Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

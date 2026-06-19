@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MokaCafe.Models.MonAn>
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = "Tạo đơn tại quầy";
+}
+
+<div class="container-fluid p-4">
+    <div class="row">
+        <!-- Cột thực đơn -->
+        <div class="col-md-8">
+            <h4 class="fw-bold mb-3">Chọn món tại quầy</h4>
+            <div class="row g-3">
+                @foreach (var mon in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm p-2">
+                            <div class="text-center h3">@mon.Emoji</div>
+                            <div class="fw-bold text-center">@mon.TenMon</div>
+                            <div class="text-center text-brown">@mon.GiaBan.ToString("N0")đ</div>
+                            <button class="btn btn-sm btn-brown mt-2" onclick="themMon('@mon.TenMon', @mon.GiaBan)">Thêm</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Cột giỏ hàng -->
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5 class="fw-bold">Đơn hàng mới</h5>
+                <div id="danhSachMon" class="mb-3"></div>
+                <div class="border-top pt-2">
+                    <p>Tổng cộng: <strong id="tongTien" class="text-brown">0đ</strong></p>
+                    <input type="text" id="tenKhach" class="form-control mb-2" placeholder="Tên khách hàng">
+                    <button class="btn btn-success w-100" onclick="hoanTatDon()">Xác nhận thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let gioHang = [];
+    let tong = 0;
+
+    function themMon(ten, gia) {
+        gioHang.push({ ten: ten, gia: gia });
+        tong += gia;
+        capNhatGiaoDien();
+    }
+
+    function capNhatGiaoDien() {
+        let html = gioHang.map(m => `<div>${m.ten} - ${m.gia.toLocaleString()}đ</div>`).join('');
+        document.getElementById('danhSachMon').innerHTML = html;
+        document.getElementById('tongTien').innerText = tong.toLocaleString() + 'đ';
+    }
+
+    function hoanTatDon() {
+        if(gioHang.length === 0) return alert('Vui lòng chọn món!');
+        alert('Đã tạo đơn thành công cho: ' + document.getElementById('tenKhach').value);
+        location.reload();
+    }
+</script>

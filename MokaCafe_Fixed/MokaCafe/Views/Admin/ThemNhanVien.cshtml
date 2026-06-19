@@ -1,0 +1,20 @@
+@model MokaCafe.Models.NguoiDung
+@{ Layout="~/Views/Shared/_DashLayout.cshtml"; ViewData["Title"]=ViewData["PageTitle"]="Thêm Nhân viên mới"; }
+<div class="chart-card" style="max-width:620px">
+  <form asp-action="ThemNhanVien" method="post">@Html.AntiForgeryToken()
+    <div class="row g-3 mb-3">
+      <div class="col-md-6"><label class="form-label small fw-semibold">Họ tên</label><input asp-for="HoTen" class="form-control" placeholder="Nguyễn Văn A"/></div>
+      <div class="col-md-6"><label class="form-label small fw-semibold">Tên đăng nhập</label><input asp-for="TenDangNhap" class="form-control" placeholder="nguyenvana"/><span asp-validation-for="TenDangNhap" class="text-danger small"></span></div>
+    </div>
+    <div class="row g-3 mb-3">
+      <div class="col-md-6"><label class="form-label small fw-semibold">Số điện thoại</label><input asp-for="SoDienThoai" class="form-control" placeholder="0901 234 567"/></div>
+      <div class="col-md-6"><label class="form-label small fw-semibold">Mật khẩu</label><input type="password" name="matKhauMoi" class="form-control" placeholder="••••••"/></div>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-md-4"><label class="form-label small fw-semibold">Chức vụ</label><select name="maChucVu" asp-items="ViewBag.ChucVus" class="form-select"><option value="">-- Chọn chức vụ --</option></select></div>
+      <div class="col-md-4"><label class="form-label small fw-semibold">Vai trò</label><select asp-for="MaVaiTro" asp-items="ViewBag.VaiTros" class="form-select"></select></div>
+      <div class="col-md-4"><label class="form-label small fw-semibold">Ngày vào làm</label><input type="date" name="ngayVao" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")"/></div>
+    </div>
+    <div class="d-flex gap-2"><button type="submit" class="btn btn-brown px-5 fw-bold">Thêm nhân viên</button><a href="/Admin/NhanSu" class="btn btn-outline-secondary px-4">Hủy</a></div>
+  </form>
+</div>

@@ -1,0 +1,40 @@
+@model List<MokaCafe.Models.MonAn>
+@{ Layout="~/Views/Shared/_ClientLayout.cshtml"; ViewData["Title"]="Trang chủ"; }
+<div class="hero-section"><div class="hero-overlay"></div>
+  <div class="container-xl position-relative py-5"><div class="hero-content text-white py-5">
+    <h1 class="hero-title">Hương vị cà phê<br/>nguyên bản</h1>
+    <p class="hero-subtitle mb-4">Thưởng thức những ly cà phê tuyệt hảo từ hạt rang tươi mỗi ngày</p>
+    <div class="d-flex gap-3">
+      <a href="/Home/Menu" class="btn btn-cream px-4 py-2 fw-bold rounded-pill">Xem thực đơn</a>
+      <a href="/Home/GioiThieu" class="btn btn-outline-light px-4 py-2 fw-bold rounded-pill">Tìm hiểu thêm</a>
+    </div>
+  </div></div>
+</div>
+<div class="container-xl py-5">
+  <h2 class="section-title mb-4">Khám phá thực đơn</h2>
+  <div class="row g-3 mb-5">
+    <div class="col-md-4"><a href="/Home/Menu?cat=coffee" class="category-card cat-coffee d-block text-decoration-none"><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">☕ Cà phê</div><span class="cat-btn">Xem thêm</span></div></a></div>
+    <div class="col-md-4"><a href="/Home/Menu?cat=tea" class="category-card cat-tea d-block text-decoration-none"><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">🍵 Trà</div><span class="cat-btn">Xem thêm</span></div></a></div>
+    <div class="col-md-4"><a href="/Home/Menu?cat=cake" class="category-card cat-cake d-block text-decoration-none"><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">🥐 Bánh ngọt</div><span class="cat-btn">Xem thêm</span></div></a></div>
+  </div>
+  <h2 class="section-title mb-4">Món bán chạy</h2>
+  <div class="row g-3">
+    @foreach (var m in Model) {
+      <div class="col-6 col-md-3">
+        <div class="product-card h-100" onclick="moModal(@m.MaMon,'@m.TenMon',@m.GiaBan,'@m.Emoji')">
+          <div class="product-img-emoji">@m.Emoji</div>
+          <div class="product-body">
+            <div class="product-cat small">@m.DanhMuc?.TenDanhMuc</div>
+            <div class="product-name">@m.TenMon</div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <span class="product-price">@m.GiaBan.ToString("N0")đ</span>
+              <button class="btn-add-cart" onclick="event.stopPropagation();moModal(@m.MaMon,'@m.TenMon',@m.GiaBan,'@m.Emoji')">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+@await Html.PartialAsync("_ModalMon")
+@section Scripts {<script>function moModal(id,ten,gia,emoji){document.getElementById('modalMonId').value=id;document.getElementById('modalMonTen').textContent=ten;document.getElementById('modalMonGia').textContent=Number(gia).toLocaleString('vi-VN')+'đ';document.getElementById('modalMonEmoji').textContent=emoji||'☕';document.getElementById('modalSoLuong').textContent='1';modalSoLuong=1;new bootstrap.Modal(document.getElementById('modalMon')).show();}</script>}

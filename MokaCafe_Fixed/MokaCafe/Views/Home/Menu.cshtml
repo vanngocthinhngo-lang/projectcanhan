@@ -1,0 +1,142 @@
+@model List<MokaCafe.Models.MonAn>
+@{
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    ViewData["Title"] = "Thực đơn";
+    var dms = ViewBag.DanhMucs as List<MokaCafe.Models.DanhMuc> ?? new();
+    string cat = ViewBag.CatHienTai ?? "all";
+}
+
+<div class="container-xl py-4">
+    <div class="row g-4">
+        <div class="col-md-2">
+            <div class="menu-sidebar-card">
+                <a href="/Home/Menu?cat=all" class="menu-cat-item @(cat == "all" ? "active" : "")">🍽️ Tất cả</a>
+                @foreach (var dm in dms)
+                {
+                    <a href="/Home/Menu?cat=@dm.MaDanhMucJS" class="menu-cat-item @(cat == dm.MaDanhMucJS ? "active" : "")">@dm.TenDanhMuc</a>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5 text-muted"><i class="bi bi-search fs-1 d-block mb-2"></i>Không tìm thấy món nào.</div>
+            }
+            <div class="row g-3">
+                @foreach (var m in Model)
+                {
+                    <div class="col-6 col-md-3">
+                        <div class="product-card h-100" onclick="moModal(@m.MaMon,'@m.TenMon',@m.GiaBan,'@m.Emoji')">
+                            <div class="product-img-emoji">
+                                @m.Emoji
+                                @if (m.TrangThai == "Hết hàng")
+                                {
+                                    <span class="het-hang-badge">Hết hàng</span>
+                                }
+                            </div>
+                            <div class="product-body">
+                                <div class="product-cat small">@m.DanhMuc?.TenDanhMuc</div>
+                                <div class="product-name">@m.TenMon</div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="product-price">@m.GiaBan.ToString("N0")đ</span>
+                                    @if (m.TrangThai == "Còn hàng")
+                                    {
+                                        <button class="btn-add-cart" onclick="event.stopPropagation();moModal(@m.MaMon,'@m.TenMon',@m.GiaBan,'@m.Emoji')">+</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ModalMon")
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function moModal(id, ten, gia, emoji){
+        document.getElementById('modalMonId').value = id;
+        document.getElementById('modalMonTen').textContent = ten;
+        document.getElementById('modalMonGia').textContent = Number(gia).toLocaleString('vi-VN') + 'đ';
+        document.getElementById('modalMonEmoji').textContent = emoji || '☕';
+        document.getElementById('modalSoLuong').textContent = '1';
+        document.getElementById('modalGhiChu').value = '';
+
+        $('.option-chip').removeClass('active');
+        $('.option-chip[data-val="50%"]').addClass('active');
+        $('.option-chip[data-val="Ít đá"]').addClass('active');
+
+        var myModal = new bootstrap.Modal(document.getElementById('modalMon'));
+        myModal.show();
+        }
+
+        function doiSoLuong(huong) {
+        var inputSL = $('#modalSoLuong');
+        var hienTai = parseInt(inputSL.text()) || 1;
+        var moi = hienTai + huong;
+        if (moi < 1) moi = 1;
+        inputSL.text(moi);
+        }
+
+        $(document).on('click', '.option-chip', function() {
+        var group = $(this).data('group');
+        $('.option-chip[data-group="' + group + '"]').removeClass('active');
+        $(this).addClass('active');
+        });
+
+        function themVaoGio() {
+        var maMon = parseInt($('#modalMonId').val());
+        var soLuong = parseInt($('#modalSoLuong').text()) || 1;
+
+        var mucDuong = $('.option-chip[data-group="sugar"].active').data('val') || "50%";
+        var mucDa = $('.option-chip[data-group="ice"].active').data('val') || "Ít đá";
+        var ghiChu = $('#modalGhiChu').val() || "";
+
+        if (!maMon) {
+        alert("Không tìm thấy thông tin món ăn!");
+        return;
+        }
+
+        $.ajax({
+        url: '/Home/ThemGioHang',
+        type: 'POST',
+        data: {
+        maMon: maMon,
+        soLuong: soLuong,
+        mucDuong: mucDuong,
+        mucDa: mucDa,
+        ghiChu: ghiChu
+        },
+        success: function (response) {
+        // Đổi sang kiểm tra biến response.ok (Chữ thường) đúng chuẩn file HomeController mới của bạn
+        if (response.ok === true) {
+        alert("Đã thêm món vào giỏ hàng thành công!");
+
+        // Cập nhật số lượng hiển thị từ thuộc tính chữ thường response.soLuong
+        $('.badge-cart-count, .nav-link span.badge').text(response.soLuong);
+
+        var myModalEl = document.getElementById('modalMon');
+        var modal = bootstrap.Modal.getInstance(myModalEl);
+        if (modal) {
+        modal.hide();
+        } else {
+        $('#modalMon').modal('hide');
+        }
+        } else {
+        alert(response.message || "Không thể thêm vào giỏ hàng.");
+        }
+        },
+        error: function (xhr) {
+        console.error("Lỗi kết nối API:", xhr.responseText);
+        alert("Có lỗi xảy ra kết nối hệ thống. Vui lòng thử lại!");
+        }
+        });
+        }
+    </script>
+}
