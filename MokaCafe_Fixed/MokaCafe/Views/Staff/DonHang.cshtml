@@ -1,0 +1,150 @@
+@model List<MokaCafe.Models.DonHang>
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = ViewData["PageTitle"] = "Quản lý Đơn hàng Online";
+    var lichSu = ViewBag.LichSu as List<MokaCafe.Models.DonHang> ?? new();
+}
+
+<div class="section-header-brown p-3 rounded-top mb-0">
+    <h6 class="mb-0 text-white fw-bold"><i class="bi bi-bell-fill me-2"></i>Đơn hàng Online mới (@Model.Count)</h6>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info rounded-0 rounded-bottom mb-4"><i class="bi bi-info-circle me-2"></i>Không có đơn hàng mới.</div>
+}
+
+<div class="row g-3 mb-5">
+    @foreach (var don in Model)
+    {
+        <div class="col-md-6">
+            <div class="order-card p-3 border rounded shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold">Khách hàng: <strong>@(string.IsNullOrEmpty(don.HoTenNguoiNhan) ? (don.KhachHang?.HoTen ?? "Khách lẻ") : don.HoTenNguoiNhan)</strong></span>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="alert('📞 Gọi: @don.SoDienThoaiGiao')">Gọi</button>
+                </div>
+                <div class="text-muted small mb-1">SĐT: @(string.IsNullOrEmpty(don.SoDienThoaiGiao) ? "Chưa cập nhật" : don.SoDienThoaiGiao)</div>
+                <div class="text-muted small mb-3">Địa chỉ: @don.DiaChiGiao<br /><em>Ghi chú: @don.GhiChu</em></div>
+
+                @foreach (var it in don.ChiTietDonHangs)
+                {
+                    <div class="d-flex gap-2 mb-2 align-items-start">
+                        <div class="oci-img">@it.MonAn?.Emoji</div>
+                        <div>
+                            <div class="fw-semibold small">@it.MonAn?.TenMon x@it.SoLuong</div>
+                            <div class="text-muted" style="font-size:11px">(@it.MucDuong, @it.MucDa@(!string.IsNullOrEmpty(it.GhiChuMon) ? ", " + it.GhiChuMon : ""))</div>
+                        </div>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold text-brown">Tổng: @don.TongTien.ToString("N0")đ</span>
+                    <span class="text-muted small">@don.ThoiGianDat</span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <form method="post" action="/Staff/XacNhanDon/@don.MaDonHang" class="flex-grow-1">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-brown w-100 fw-bold"><i class="bi bi-check-lg me-1"></i>Xác nhận</button>
+                    </form>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#huyDonModal-@don.MaDonHang">
+                        <i class="bi bi-x-circle"></i> Hủy
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="huyDonModal-@don.MaDonHang" tabindex="-1">
+            <div class="modal-dialog">
+                <form method="post" action="/Staff/HuyDon" class="modal-content">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@don.MaDonHang" />
+                    <div class="modal-header">
+                        <h5 class="modal-title">Hủy đơn hàng #@don.MaDonHangHienThi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label">Vui lòng nhập lý do hủy:</label>
+                        <textarea name="lyDoHuy" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-danger">Xác nhận hủy đơn</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+<h5 class="fw-bold mb-3 mt-4">Lịch sử đơn hàng Online</h5>
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr><th>Order ID</th><th>Customer</th><th>Time</th><th>Status</th><th>Thao tác</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var o in lichSu)
+                {
+                    <tr>
+                        <td class="fw-semibold">@o.MaDonHangHienThi</td>
+                        <td>@(string.IsNullOrEmpty(o.HoTenNguoiNhan) ? (o.KhachHang?.HoTen ?? "Khách lẻ") : o.HoTenNguoiNhan)</td>
+                        <td>@o.ThoiGianDat @o.NgayDat.ToString("dd/MM")</td>
+                        <td><span class="badge @(o.TrangThai == "Đã giao" ? "badge-green" : o.TrangThai == "Đã hủy" ? "badge-red" : "badge-orange")">@o.TrangThai</span></td>
+
+                        <td>
+                            <!-- Nút xem chi tiết (Giữ nguyên) -->
+                            <button class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#detailModal-@o.MaDonHang"><i class="bi bi-eye"></i></button>
+
+                            <!-- THAY THẾ NÚT IN CŨ BẰNG NÚT NÀY -->
+                            <a href="/Staff/InHoaDon/@o.MaDonHang" target="_blank" class="btn btn-sm btn-secondary">
+                                <i class="bi bi-printer"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@foreach (var o in lichSu)
+{
+    <div class="modal fade" id="detailModal-@o.MaDonHang" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="printArea-@o.MaDonHang">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hóa đơn #@o.MaDonHangHienThi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Khách hàng:</strong> @(string.IsNullOrEmpty(o.HoTenNguoiNhan) ? (o.KhachHang?.HoTen ?? "Khách lẻ") : o.HoTenNguoiNhan)</p>
+                    <table class="table table-bordered">
+                        <thead><tr><th>Món</th><th>SL</th><th>Thành tiền</th></tr></thead>
+                        <tbody>
+                            @if (o.ChiTietDonHangs != null)
+                            {
+                                @foreach (var item in o.ChiTietDonHangs)
+                                {
+                                    <tr><td>@item.MonAn?.TenMon</td><td>@item.SoLuong</td><td>@((item.SoLuong * item.DonGia).ToString("N0"))đ</td></tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <h4 class="text-end">Tổng cộng: @o.TongTien.ToString("N0")đ</h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <a href="/Staff/InHoaDon/@o.MaDonHang" target="_blank" class="btn btn-primary">
+                    In hóa đơn
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="text-end mb-3 mt-3">
+    <a href="/Staff/LichSuTatCa" class="btn btn-outline-brown"><i class="bi bi-list-columns"></i> Xem toàn bộ lịch sử</a>
+</div>

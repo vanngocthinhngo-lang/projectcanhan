@@ -1,0 +1,58 @@
+<div class="modal fade" id="modalMon" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0" style="border-radius:20px; overflow:hidden;">
+
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="modalMonTen">Tên món ăn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center mb-2" id="modalMonEmoji" style="font-size:80px">☕</div>
+                <p class="text-brown fw-bold fs-5 text-center" id="modalMonGia">0đ</p>
+
+                <input type="hidden" id="modalMonId" />
+
+                <div class="mb-3">
+                    <div class="fw-semibold small mb-2">Mức đường</div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="option-chip" data-group="sugar" data-val="0%">0%</span>
+                        <span class="option-chip active" data-group="sugar" data-val="50%">50%</span>
+                        <span class="option-chip" data-group="sugar" data-val="100%">100%</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="fw-semibold small mb-2">Mức đá</div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="option-chip" data-group="ice" data-val="Không đá">Không đá</span>
+                        <span class="option-chip active" data-group="ice" data-val="Ít đá">Ít đá</span>
+                        <span class="option-chip" data-group="ice" data-val="Nhiều đá">Nhiều đá</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="fw-semibold small mb-2">Số lượng</div>
+                    <div class="d-flex align-items-center gap-3">
+                        <button type="button" class="qty-btn" onclick="doiSoLuong(-1)">−</button>
+                        <span class="fw-bold fs-5" id="modalSoLuong">1</span>
+                        <button type="button" class="qty-btn" onclick="doiSoLuong(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <div class="fw-semibold small mb-2">Ghi chú</div>
+                    <textarea class="form-control" id="modalGhiChu" rows="2" placeholder="VD: Không lấy ống hút, thêm sốt socola..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-brown rounded-pill px-4 fw-bold" onclick="themVaoGio()">
+                    <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

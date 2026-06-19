@@ -1,0 +1,89 @@
+@model List<MokaCafe.Models.NguoiDung>
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = ViewData["PageTitle"] = "Quản lý Khách hàng";
+}
+
+<div class="container-fluid py-4">
+    <!-- 1. Các thẻ KPI -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4"><div class="stat-card"><div class="stat-label">Tổng số khách hàng</div><div class="stat-value">@ViewBag.TongKhach</div></div></div>
+        <div class="col-md-4"><div class="stat-card"><div class="stat-label">Thành viên mới trong tháng</div><div class="stat-value">@ViewBag.KhachThangNay</div></div></div>
+        <div class="col-md-4"><div class="stat-card"><div class="stat-label">Tổng điểm tích lũy đã cấp</div><div class="stat-value">@ViewBag.KhachThanThiet</div></div></div>
+    </div>
+
+    <!-- 2. Thanh công cụ (Lọc & Xuất) -->
+    <div class="card shadow-sm border-0 p-3 mb-4">
+        <form method="get" class="d-flex gap-2 align-items-center">
+            <div class="search-wrap flex-grow-1 position-relative">
+                <i class="bi bi-search position-absolute" style="left: 10px; top: 10px;"></i>
+                <input type="text" name="search" value="@(ViewBag.Search ?? "")" class="form-control ps-5" placeholder="Tìm kiếm khách hàng..." />
+            </div>
+
+            <select name="hang" class="form-select" style="width: 150px;" onchange="this.form.submit()">
+                <option value="">Tất cả hạng</option>
+                <option value="Vàng" selected="@(ViewBag.Hang == "Vàng")">Vàng</option>
+                <option value="Đồng" selected="@(ViewBag.Hang == "Đồng")">Đồng</option>
+            </select>
+
+            <button type="submit" class="btn btn-outline-secondary">Lọc</button>
+            <a asp-action="XuatExcelKhachHang" class="btn btn-success"><i class="bi bi-file-earmark-excel me-1"></i>Xuất Excel</a>
+        </form>
+    </div>
+
+    <!-- 3. Bảng dữ liệu -->
+    <div class="table-card shadow-sm border-0 p-3">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Họ tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Hạng thành viên</th>
+                        <th>Tổng đơn</th>
+                        <th>Tổng chi tiêu</th>
+                        <th>Ngày tham gia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var u in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="item-thumb bg-light rounded-circle p-2">👤</div>
+                                    <span class="fw-semibold">@u.HoTen</span>
+                                </div>
+                            </td>
+                            <td>@u.SoDienThoai</td>
+                            <td>
+                                <span class="badge @(u.ThongTinKhachHang?.LaKhachThanThiet == true ? "bg-warning text-dark" : "bg-primary")">
+                                    @(u.ThongTinKhachHang?.LaKhachThanThiet == true ? "Vàng" : "Đồng")
+                                </span>
+                            </td>
+                            <td>@(u.ThongTinKhachHang?.TongDonHang ?? 0) đơn</td>
+                            <td>@((u.ThongTinKhachHang?.TongChiTieu ?? 0).ToString("N0"))đ</td>
+                            <td>@u.NgayTao.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('khachChart').getContext('2d');
+    new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'], // Lấy từ Controller
+    datasets: [{
+    label: 'Khách hàng mới',
+    data: [12, 19, 3, 5, 2, 3], // Lấy từ Controller
+    borderColor: '#2ecc71',
+    tension: 0.4
+    }]
+    }
+    });
+</script>

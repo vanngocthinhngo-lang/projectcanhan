@@ -1,0 +1,40 @@
+﻿@model List<MokaCafe.Models.ChiTietDonHang>
+@{
+    decimal phiVanChuyen = 15000;
+    decimal tamTinh = Model.Sum(x => x.DonGia * x.SoLuong);
+    decimal tongThanhToan = tamTinh + phiVanChuyen;
+}
+
+<div class="px-2">
+    @foreach (var item in Model)
+    {
+        <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+            <div>
+                <div class="fw-bold">@item.MonAn?.TenMon</div>
+                <div class="small text-muted">
+                    @item.SoLuong x @item.DonGia.ToString("N0")đ
+                    <span class="badge bg-light text-dark ms-1">@item.MucDuong, @item.MucDa</span>
+                    @if (!string.IsNullOrEmpty(item.GhiChuMon))
+                    {
+                        <div class="fst-italic text-primary mt-1">Ghi chú: @item.GhiChuMon</div>
+                    }
+                </div>
+            </div>
+            <div class="fw-bold align-self-center">@((item.DonGia * item.SoLuong).ToString("N0"))đ</div>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between pt-2">
+        <span>Tổng tạm tính:</span>
+        <span class="fw-bold">@tamTinh.ToString("N0")đ</span>
+    </div>
+    <div class="d-flex justify-content-between mt-1 text-success">
+        <span>Phí vận chuyển:</span>
+        <span class="fw-bold">@phiVanChuyen.ToString("N0")đ</span>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between fs-5">
+        <span class="fw-bold">Tổng thanh toán:</span>
+        <span class="fw-bold text-brown">@tongThanhToan.ToString("N0")đ</span>
+    </div>
+</div>

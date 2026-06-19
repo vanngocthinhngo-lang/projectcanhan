@@ -1,0 +1,30 @@
+@model List<MokaCafe.Models.NguyenLieu>
+@{ Layout="~/Views/Shared/_DashLayout.cshtml"; ViewData["Title"]=ViewData["PageTitle"]="Quản lý Kho hàng"; }
+<div class="d-flex gap-2 mb-4">
+  <button class="btn btn-brown" data-bs-toggle="modal" data-bs-target="#modalNhapKho"><i class="bi bi-plus-lg me-1"></i>Nhập kho</button>
+  <button class="btn btn-outline-secondary" onclick="window.print()"><i class="bi bi-download me-1"></i>Xuất báo cáo</button>
+</div>
+<div class="row g-3">
+  @foreach(var item in Model){
+    var pct=item.SoLuongToiDa>0?(int)Math.Round((double)item.SoLuongHienTai/(double)item.SoLuongToiDa*100):0;
+    var barCls=pct<30?"low":pct<60?"mid":"";
+    var badgeCls=pct<30?"badge-red":pct<60?"badge-orange":"badge-green";
+    var badgeTxt=pct<30?"Sắp hết":pct<60?"Trung bình":"Đủ hàng";
+    <div class="col-6 col-md-3"><div class="chart-card">
+      <div class="fw-bold mb-1">@item.TenNguyenLieu</div>
+      <div class="fw-bold text-brown" style="font-size:22px">@item.SoLuongHienTai</div>
+      <div class="text-muted small">@item.DonVi còn lại / @item.SoLuongToiDa @item.DonVi</div>
+      <div class="wh-progress my-2"><div class="wh-bar @barCls" style="width:@pct%"></div></div>
+      <span class="badge @badgeCls">@badgeTxt</span>
+    </div></div>
+  }
+</div>
+<div class="modal fade" id="modalNhapKho" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header border-0"><h5 class="modal-title fw-bold">Nhập kho nguyên liệu</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body"><form method="post" action="/Staff/NhapKho">@Html.AntiForgeryToken()
+    <div class="mb-3"><label class="form-label small fw-semibold">Nguyên liệu</label><select name="maNguyenLieu" class="form-select">@foreach(var i in Model){<option value="@i.MaNguyenLieu">@i.TenNguyenLieu (@i.DonVi)</option>}</select></div>
+    <div class="mb-3"><label class="form-label small fw-semibold">Số lượng nhập</label><input type="number" name="soLuong" class="form-control" step="0.1" min="0.1" value="1"/></div>
+    <div class="mb-3"><label class="form-label small fw-semibold">Lý do</label><input type="text" name="lyDo" class="form-control" placeholder="Nhập hàng định kỳ..."/></div>
+    <button type="submit" class="btn btn-brown w-100 fw-bold">Xác nhận nhập kho</button>
+  </form></div>
+</div></div></div>

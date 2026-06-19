@@ -1,0 +1,16 @@
+@model List<MokaCafe.Models.DonHang>
+@{ Layout="~/Views/Shared/_DashLayout.cshtml"; ViewData["Title"]=ViewData["PageTitle"]="Moka Cafe POS & Quản lý Chế biến"; }
+@if(!Model.Any()){<div class="alert alert-info"><i class="bi bi-info-circle me-2"></i>Không có đơn nào đang chế biến.</div>}
+<div class="row g-3">
+  @foreach(var don in Model){
+    <div class="col-md-4"><div class="order-card">
+      <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">@don.MaDonHangHienThi</span><span class="badge @(don.CheBien?.TrangThai=="Hoàn thành"?"badge-green":"badge-orange")">@(don.CheBien?.TrangThai??"Đang làm")</span></div>
+      <div class="text-muted small mb-1">KH: @(don.KhachHang?.HoTen??"Tại bàn")</div>
+      <div class="text-muted small mb-3">@don.NgayDat.ToString("HH:mm")</div>
+      <div class="mb-3">
+        @foreach(var it in don.ChiTietDonHangs){<div class="d-flex gap-2 mb-2 align-items-start"><div class="oci-img">@it.MonAn?.Emoji</div><div><div class="fw-semibold small">@it.MonAn?.TenMon x@it.SoLuong</div><div class="text-muted" style="font-size:11px">(@it.MucDuong, @it.MucDa@(!string.IsNullOrEmpty(it.GhiChuMon)?", "+it.GhiChuMon:""))</div></div></div>}
+      </div>
+      <form method="post" action="/Staff/HoanThanhCheBien/@don.MaDonHang">@Html.AntiForgeryToken()<button type="submit" class="btn btn-brown w-100 fw-bold"><i class="bi bi-check-lg me-1"></i>Hoàn thành chế biến</button></form>
+    </div></div>
+  }
+</div>

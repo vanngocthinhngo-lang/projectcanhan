@@ -1,0 +1,93 @@
+@model List<MokaCafe.Models.MonAn>
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = ViewData["PageTitle"] = "Thực đơn";
+    var dms = ViewBag.DanhMucs as List<MokaCafe.Models.DanhMuc> ?? new();
+    string cat = ViewBag.CatHienTai ?? "all";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="d-flex gap-2 mb-4 flex-wrap">
+    <a href="/Staff/ThucDon?cat=all" class="btn @(cat == "all" ? "btn-brown" : "btn-outline-secondary") btn-sm rounded-pill">Tất cả</a>
+    @foreach (var dm in dms)
+    {
+        <a href="/Staff/ThucDon?cat=@dm.MaDanhMucJS" class="btn @(cat == dm.MaDanhMucJS ? "btn-brown" : "btn-outline-secondary") btn-sm rounded-pill">@dm.TenDanhMuc</a>
+    }
+</div>
+
+<div class="row g-3">
+    @foreach (var mon in Model)
+    {
+        <div class="col-6 col-md-3 col-lg-2">
+            <div class="card h-100 border-0 shadow-sm p-2 position-relative">
+                <button class="btn btn-sm btn-primary position-absolute" style="top:5px; right:5px;"
+                        onclick="themVaoDonTaiQuay(@mon.MaMon, '@mon.TenMon', @mon.GiaBan)">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+                <div class="text-center h3 mt-3">@mon.Emoji</div>
+                <div class="fw-bold text-center">@mon.TenMon</div>
+                <div class="text-center text-brown">@mon.GiaBan.ToString("N0")đ</div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Giỏ hàng tại quầy -->
+<div id="floatingCart" class="card shadow-lg p-3" style="position:fixed; bottom:20px; right:20px; width:300px; z-index:1000; display:none;">
+    <h6 class="fw-bold">Đơn tại quầy</h6>
+    <div id="listItems" style="max-height:180px; overflow-y:auto; margin-bottom:10px;"></div>
+
+    <!-- Input thông tin khách hàng -->
+    <input type="text" id="inputTenKhach" class="form-control form-control-sm mb-2" placeholder="Tên khách hàng">
+    <input type="text" id="inputSdtKhach" class="form-control form-control-sm mb-2" placeholder="SĐT khách hàng">
+
+    <hr>
+    <strong>Tổng: <span id="cartTotal">0</span>đ</strong>
+    <button class="btn btn-brown w-100 mt-2" onclick="chotDon()">Chốt đơn</button>
+</div>
+
+<script>
+    let items = [];
+
+    function themVaoDonTaiQuay(id, ten, gia) {
+        items.push({ maMon: id, tenMon: ten, giaBan: gia });
+        document.getElementById('floatingCart').style.display = 'block';
+        renderCart();
+    }
+
+    function renderCart() {
+        let list = document.getElementById('listItems');
+        list.innerHTML = items.map(x => `<div class="small">${x.tenMon} - ${x.giaBan.toLocaleString()}đ</div>`).join('');
+        document.getElementById('cartTotal').innerText = items.reduce((a, b) => a + b.giaBan, 0).toLocaleString();
+    }
+
+    function chotDon() {
+        if(items.length === 0) return;
+
+        let data = {
+            hoTen: document.getElementById('inputTenKhach').value || "Khách tại quầy",
+            soDienThoai: document.getElementById('inputSdtKhach').value || "N/A",
+            chiTiet: items,
+            tongTien: items.reduce((a, b) => a + b.giaBan, 0)
+        };
+
+        fetch('/Staff/LuuDonOffline', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.ok) {
+                alert('Chốt đơn thành công!');
+                location.reload();
+            } else {
+                alert('Có lỗi xảy ra!');
+            }
+        });
+    }
+</script>

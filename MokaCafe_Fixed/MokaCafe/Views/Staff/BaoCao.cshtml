@@ -1,0 +1,80 @@
+@model IEnumerable<MokaCafe.Models.DonHang>
+@{
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
+    ViewData["Title"] = "Báo cáo Tổng hợp";
+}
+
+<div class="container-fluid p-4">
+    <h4 class="fw-bold mb-4">Báo cáo tổng hợp hoạt động</h4>
+
+    <div class="card p-3 mb-4 shadow-sm border-0">
+        <form method="get" class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="small text-muted">Từ ngày:</label>
+                <input type="date" name="tuNgay" class="form-control" value="@ViewBag.TuNgay">
+            </div>
+            <div class="col-md-3">
+                <label class="small text-muted">Đến ngày:</label>
+                <input type="date" name="denNgay" class="form-control" value="@ViewBag.DenNgay">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-brown w-100">Xem báo cáo</button>
+            </div>
+            <div class="col-md-4 text-end">
+                <button type="button" onclick="exportTableToExcel('baoCaoTable', 'BaoCaoDoanhThu')" class="btn btn-success">
+                    <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm border-0 bg-success text-white">
+                <h6>Doanh thu thuần</h6>
+                <h3 class="fw-bold">@(((decimal)(ViewBag.TongDoanhThu ?? 0)).ToString("N0"))đ</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm border-0 bg-primary text-white">
+                <h6>Tổng đơn đã giao</h6>
+                <h3 class="fw-bold">@ViewBag.TongDon đơn</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm border-0 bg-warning text-dark">
+                <h6>Trung bình/đơn</h6>
+                <h3 class="fw-bold">@(((decimal)(ViewBag.TrungBinhDon ?? 0)).ToString("N0"))đ</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-card p-4 shadow-sm">
+        <table class="table table-bordered" id="baoCaoTable">
+            <thead class="table-light">
+                <tr><th>Order ID</th><th>Thời gian</th><th>Khách hàng</th><th>Trạng thái</th><th>Thành tiền</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var o in Model)
+                {
+                    <tr>
+                        <td>@o.MaDonHangHienThi</td>
+                        <td>@o.NgayDat.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@(o.KhachHang?.HoTen ?? "Khách lẻ")</td>
+                        <td><span class="badge bg-success">@o.TrangThai</span></td>
+                        <td class="fw-bold">@o.TongTien.ToString("N0")đ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function exportTableToExcel(tableID, filename) {
+        var table = document.getElementById(tableID);
+        var wb = XLSX.utils.table_to_book(table, { sheet: "BaoCao" });
+        XLSX.writeFile(wb, filename + ".xlsx");
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
